@@ -7,13 +7,20 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Outfit:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
  <script>
   // Initialize EmailJS
   emailjs.init('8yQGhNkEkpiSFTBr8');
  </script>
+ <style>
+     /* Thêm một chút CSS inline để đảm bảo hiển thị đẹp nếu thiếu file style.css */
+     .font-display { font-family: 'Playfair Display', serif; }
+     .font-body { font-family: 'Outfit', sans-serif; }
+     .fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
+     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+ </style>
  </head>
  <body class="h-full font-body">
   <div id="app" class="h-full w-full overflow-auto" style="background-color: #faf8f5;"><!-- Navigation -->
@@ -64,31 +71,36 @@
       <p style="color: #5c5652;">Khám phá các danh mục thời trang đa dạng</p>
      </div>
      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+       <!-- CATEGORY: TRẺ EM (tre) -->
        <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
-           style="background-image:
-             url('images/4bao.jpg');">
-             <div class="h-full flex flex-col items-center justify-center p-6 text-center">
-        <h3 class="font-display text-lg font-semibold mb-1" style="color: #fffefe;">BÁO tủi trẻ</h3><span class="text-sm" style="color: #ffffff;">128 sản phẩm</span>
+     onclick="filterProducts('tre')"
+     style="background-image: url('images/4bao.jpg');">
+             <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
+        <h3 class="font-display text-lg font-semibold mb-1" style="color: #fffefe;">BÁO tủi trẻ</h3>
+        <span class="text-sm" style="color: #ffffff;">128 sản phẩm</span>
       </div>
       </div>
+         <!-- CATEGORY: NAM -->
          <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
-           style="background-image:
-             url('images/baanhem.jpg');">
-       <div class="h-full flex flex-col items-center justify-center p-6 text-center">
+     onclick="filterProducts('Nam')"
+     style="background-image: url('images/baanhem.jpg');">
+       <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
         <h3 class="font-display text-lg font-semibold mb-1" style="color: #fefefe;">Đồ Nam</h3><span class="text-sm" style="color: #ffffff;">96 sản phẩm</span>
        </div>
       </div>
+      <!-- CATEGORY: ÁO DÀI -->
       <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
-           style="background-image:
-             url('images/aodai1.jpg');">
-       <div class="h-full flex flex-col items-center justify-center p-6 text-center">
+     onclick="filterProducts('Áo dài')"
+     style="background-image: url('images/aodai1.jpg');">
+       <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
         <h3 class="font-display text-lg font-semibold mb-1" style="color: #ffffff;">Áo dài tết</h3><span class="text-sm" style="color: #fafafa;">84 sản phẩm</span>
        </div>
       </div>
+            <!-- CATEGORY: VÁY -->
             <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
-           style="background-image:
-             url('images/vay.jpg');">
-       <div class="h-full flex flex-col items-center justify-center p-6 text-center">
+     onclick="filterProducts('Váy')"
+     style="background-image: url('images/vay.jpg');">
+       <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
         <h3 class="font-display text-lg font-semibold mb-2" style="color: #f7f4f4;">Váy</h3><span class="text-sm" style="color: #ffffff;">156 sản phẩm</span>
        </div>
       </div>
@@ -102,13 +114,18 @@
        <h2 class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color: #2d2926;">Sản phẩm nổi bật</h2>
        <p style="color: #5c5652;">Được yêu thích nhất tuần này</p>
       </div>
-      <div class="flex gap-2"><button class="px-4 py-2 rounded-full text-sm font-medium transition-colors" style="background-color: #2d2926; color: #faf8f5;">Tất cả</button> <button class="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Nam</button> <button class="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Nữ</button>
+      <!-- NÚT LỌC SẢN PHẨM -->
+      <div class="flex gap-2">
+        <button onclick="filterProducts('all')" class="px-4 py-2 rounded-full text-sm font-medium transition-colors border border-transparent hover:border-gray-400" style="background-color: #2d2926; color: #faf8f5;">Tất cả</button> 
+        <button onclick="filterProducts('Nam')" class="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Nam</button> 
+        <button onclick="filterProducts('Váy')" class="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Nữ/Váy</button>
       </div>
      </div>
      <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"><!-- Products will be rendered here -->
      </div>
     </div>
    </section><!-- Features -->
+   <!-- ... (Giữ nguyên phần Features) ... -->
    <section class="py-12 sm:py-16" style="background-color: #2d2926;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
@@ -148,6 +165,7 @@
      </div>
     </div>
    </section><!-- Newsletter -->
+   <!-- ... (Giữ nguyên Newsletter, Footer, Cart Sidebar, Modals) ... -->
    <section class="py-12 sm:py-16" style="background-color: #c9a87c;">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
      <h2 class="font-display text-3xl sm:text-4xl font-bold mb-4" style="color: #2d2926;">Đăng ký nhận ưu đãi</h2>
@@ -340,7 +358,8 @@
          </div>
         </div>
         <div class="mt-4 p-3 rounded-lg flex items-start gap-2" style="background-color: #fff3e0;">
-         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color: #f57c00;" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color: #f57c00;" fill="currentColor" viewbox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
          </svg>
          <div class="text-xs" style="color: #5c5652;"><span class="font-medium block mb-1">Lưu ý:</span> Vui lòng nhập <strong>chính xác nội dung chuyển khoản</strong> để đơn hàng được xử lý nhanh nhất.
          </div>
@@ -452,6 +471,7 @@
    </div>
   </div>
   <script>
+
     // Default configuration
     const defaultConfig = {
       store_name: 'LỤC TIỂU MÀN THẦU',
@@ -470,24 +490,28 @@
     let config = { ...defaultConfig };
     let cart = JSON.parse(localStorage.getItem('lucj_cart')) || [];
 
-    // Product data
-    <!-- mãng aray trong java -->
+    // Product data - ĐÃ CẬP NHẬT CATEGORY CHUẨN XÁC HƠN
     const products = [
-      { id: 1, name: 'Áo Dài Tết cho các chị em', price: 1890000, originalPrice: 2690000, badge: 'Sale', image: 'images/aodai1.jpg', images: ['images/aodai1.jpg', 'images/aodai.jpg'] },
-      { id: 2, name: 'Váy Midi Elegant', price: 1290000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'] },
-      { id: 3, name: 'Áo dài thanh xuân vườn trường', price: 890000, originalPrice: null, badge: null,  image: 'images/20.jpg', images: ['images/20.jpg', 'images/19.jpg', 'images/18.jpg'] },
-      { id: 4, name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'] },
-      { id: 5, name: 'Set Xanh Nhí Nhảnh', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/21.jpg', images: ['images/21.jpg', 'images/22.jpg', 'images/23.jpg'] },
-      { id: 6, name: 'Set Đồ Đi Đồi Đà Lạt', price: 1190000, originalPrice: null, badge: null, image: 'images/thanh.jpg', images: ['images/thanh.jpg', 'images/thanhnui.jpg', 'images/tuannui.jpg'] },
-      { id: 9, name: 'Áo dài hồng phấn họa tiết nổi', price: 1590000, originalPrice: 1990000, badge: 'Sale', image: 'images/aodai2.jpg', images: ['images/aodai2.jpg', 'images/aodai3.jpg'] },
-      { id: 10, name: 'Áo cô em nhà bên (cũ)', price: 190000, originalPrice: null, badge: null, image: 'images/aocu.jpg', images: ['images/aocu.jpg', 'images/aocu1.jpg',] },
-      { id: 11, name: 'Áo dài xanh lục', price: 290000, originalPrice: null, badge: null, image: 'images/thao0.jpg', images: ['images/thao0.jpg', 'images/thao1.jpg', 'images/thao.jpg'] },
-      { id: 12, name: 'set đi biển em gái Jennie ', price: 90000, originalPrice: null, badge: null, image: 'images/jen.jpg', images: ['images/jen.jpg', 'images/jen1.jpg','images/jen1.jpg','images/jen2.jpg'] },
-      { id: 13, name: 'váy phi hành gia trẻ em ( tặng kèm kính bơi, nón kết, giày, cây xanh) ', price: 100000, originalPrice: null, badge: null, image: 'images/phi.jpg', images: ['images/phi.jpg', 'images/phi1.jpg','images/phi0.jpg'] },
-      { id: 14, name: 'set đi biển trẻ em ', price: 90000, originalPrice: null, badge: null, image: 'images/dibientreem.jpg', images: ['images/dibientreem.jpg', 'images/dibientreem0.jpg'] },
-      { id: 15, name: 'set đồ nhập ngũ trẻ em', price: 90000, originalPrice: null, badge: null, image: 'images/ngu.jpg', images: ['images/ngu.jpg', 'images/ngu0.jpg'] },
-      { id: 16, name: 'set đồ công chúa Disney', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/dis.jpg', images: ['images/dis.jpg', 'images/dis1.jpg', 'images/dis0.jpg'] },
-      { id: 17, name: 'set streetstyle secondhand của Chy Pu ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/hanh.jpg', images: ['images/hanh.jpg', 'images/hanh1.jpg',] }
+      { id: 1, name: 'Áo Dài Tết cho các chị em', price: 1890000, originalPrice: 2690000, badge: 'Sale', image: 'images/aodai1.jpg', images: ['images/aodai1.jpg', 'images/aodai.jpg'], category: 'Áo dài' },
+      { id: 2, name: 'Váy Midi Elegant', price: 1290000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'],  category: 'Váy' },
+      { id: 3, name: 'Áo dài thanh xuân vườn trường', price: 890000, originalPrice: null, badge: null,  image: 'images/20.jpg', images: ['images/20.jpg', 'images/19.jpg', 'images/18.jpg'], },
+      { id: 4, name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'], category:'Nam' },
+      { id: 5, name: 'Set Xanh Nhí Nhảnh', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/21.jpg', images: ['images/21.jpg', 'images/22.jpg', 'images/23.jpg'], category:'Set' },
+      { id: 6, name: 'Set Đồ Đi Đồi Đà Lạt', price: 1190000, originalPrice: null, badge: null, image: 'images/thanh.jpg', images: ['images/thanh.jpg', 'images/thanhnui.jpg', 'images/tuannui.jpg'], category:'Nam' },
+      { id: 9, name: 'Áo dài hồng phấn họa tiết nổi', price: 1590000, originalPrice: 1990000, badge: 'Sale', image: 'images/aodai2.jpg', images:['images/aodai2.jpg','images/aodai3.jpg'], category:'Áo dài' },
+      { id: 10, name: 'Áo cô em nhà bên (cũ)', price: 190000, originalPrice: null, badge: null, image: 'images/aocu.jpg', images: ['images/aocu.jpg', 'images/aocu1.jpg',], category: 'Set' },
+      { id: 11, name: 'Áo dài xanh lục', price: 290000, originalPrice: null, badge: null, image: 'images/thao0.jpg', images: ['images/thao0.jpg', 'images/thao1.jpg', 'images/thao.jpg'], category: 'Áo dài' },
+      { id: 12, name: 'set đi biển em gái Jennie ', price: 90000, originalPrice: null, badge: null, image: 'images/jen.jpg', images: ['images/jen.jpg', 'images/jen1.jpg','images/jen1.jpg','images/jen2.jpg'], category: 'Set' },
+      { id: 13, name: 'váy phi hành gia trẻ em', price: 100000, originalPrice: null, badge: null, image: 'images/phi.jpg', images: ['images/phi.jpg', 'images/phi1.jpg','images/phi0.jpg'], category: 'tre' },
+      { id: 14, name: 'set đi biển trẻ em ', price: 90000, originalPrice: null, badge: null, image: 'images/dibientreem.jpg', images: ['images/dibientreem.jpg', 'images/dibientreem0.jpg'], category: 'tre Váy' },
+      { id: 15, name: 'set đồ nhập ngũ trẻ em', price: 90000, originalPrice: null, badge: null, image: 'images/ngu.jpg', images: ['images/ngu.jpg', 'images/ngu0.jpg'], category: 'tre' },
+      { id: 16, name: 'set đồ công chúa Disney', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/dis.jpg', images: ['images/dis.jpg', 'images/dis1.jpg', 'images/dis0.jpg'], category: 'tre Váy'},
+      { id: 17, name: 'set streetstyle secondhand của Chy Pu ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/hanh.jpg', images: ['images/hanh.jpg', 'images/hanh1.jpg',], category: 'Set' },
+      { id: 18, name: 'combo du xuân cho 2 chị em cây khế ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/2chiem.jpg', images: ['images/2chiem.jpg', 'images/2chiem1.jpg',], category: 'Áo dài' },
+      { id: 19, name: 'set Xuân Bính Ngọ 2026', price: 690000, originalPrice: 1890000, badge: 'New', image: 'images/ngo.jpg', images: ['images/ngo.jpg', 'images/ngo0.jpg',], category: 'Set' },
+      { id: 20, name: 'set đồ đi biển cho nàng thơ', price:188000, originalPrice: null, badge: null, image: 'images/hanh0.jpg', images: ['images/hanh0.jpg', 'images/bien.jpg',], category: 'Set' },
+      { id: 21, name: 'set váy dài áo trễ vai', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/vaydai.jpg', images: ['images/vaydai.jpg', 'images/vaydai0.jpg', 'images/vaydai1.jpg'], category: 'Váy' }
+      
     ];
 
     // Format price
@@ -495,18 +519,24 @@
       return new Intl.NumberFormat('vi-VN').format(price) + '₫';
     }
 
-    // Render products
-    function renderProducts() {
+    // Render products - CẬP NHẬT ĐỂ NHẬN DANH SÁCH LỌC
+    function renderProducts(listToRender = products) {
       const grid = document.getElementById('product-grid');
-      grid.innerHTML = products.map((product, index) => `
-        <div class="product-card rounded-2xl overflow-hidden shadow-sm cursor-pointer" style="background-color: ${config.surface_color}; animation-delay: ${index * 0.1}s;" onclick="openProductModal(${product.id})">
+      
+      // Xử lý khi không có sản phẩm nào
+      if (listToRender.length === 0) {
+        grid.innerHTML = '<div class="col-span-2 lg:col-span-4 text-center py-10"><p style="color: #5c5652;">Không tìm thấy sản phẩm nào thuộc danh mục này.</p></div>';
+        return;
+      }
+
+      grid.innerHTML = listToRender.map((product, index) => `
+        <div class="product-card rounded-2xl overflow-hidden shadow-sm cursor-pointer fade-in" style="background-color: ${config.surface_color}; animation-delay: ${index * 0.05}s;" onclick="openProductModal(${product.id})">
           <div class="relative aspect-[3/4] overflow-hidden" style="background: linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%);">
            <div class="product-image absolute inset-0">
-  <img src="${product.image}" 
-       alt="${product.name}" 
-       class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-</div>
-
+            <img src="${product.image}" 
+                 alt="${product.name}" 
+                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            </div>
             ${product.badge ? `<span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style="background-color: ${config.secondary_action_color}; color: ${config.text_color};">${product.badge}</span>` : ''}
             <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-3 right-3 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="background-color: ${config.primary_action_color}; color: ${config.background_color};">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -523,6 +553,52 @@
           </div>
         </div>
       `).join('');
+    }
+
+    // --- MỚI: HÀM LỌC SẢN PHẨM ---
+    function filterProducts(categoryName) {
+      let filteredList = [];
+
+      if (categoryName === 'all') {
+        filteredList = products;
+      } else {
+        // Lọc không phân biệt hoa thường
+        filteredList = products.filter(p => 
+          p.category && p.category.toLowerCase().includes(categoryName.toLowerCase())
+        );
+      }
+
+      // Render lại danh sách
+      renderProducts(filteredList);
+
+      // Tự động cuộn xuống phần sản phẩm
+      document.getElementById('products').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+      
+      // Update màu nút bấm (Optional UX improvement)
+      updateActiveFilterButton(categoryName);
+    }
+
+    function updateActiveFilterButton(activeName) {
+        const buttons = document.querySelectorAll('#products button');
+        buttons.forEach(btn => {
+            const btnText = btn.textContent.toLowerCase();
+            const isActive = (activeName === 'all' && btnText.includes('tất cả')) || 
+                             (activeName !== 'all' && btnText.includes(activeName.toLowerCase())) ||
+                             (activeName === 'Váy' && btnText.includes('nữ'));
+
+            if (isActive) {
+                btn.style.backgroundColor = '#2d2926';
+                btn.style.color = '#faf8f5';
+                btn.style.borderColor = 'transparent';
+            } else {
+                btn.style.backgroundColor = 'transparent';
+                btn.style.color = '#5c5652';
+                btn.style.borderColor = 'transparent';
+            }
+        });
     }
 
     // Add to cart
@@ -1299,8 +1375,5 @@ Liên hệ:
 
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c4057a9e345a029',t:'MTc2OTQzMzk5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
+ </body>
 </html>
-
-
