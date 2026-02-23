@@ -3,10 +3,22 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kết quả tìm kiếm - LỤC TIỂU MÀN THẦU SHOP</title>
+  <title>LỤC TIỂU MÀN THẦU SHOP</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Outfit:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+ <script>
+  // Initialize EmailJS
+  emailjs.init('8yQGhNkEkpiSFTBr8');
+ </script>
+ <style>
+     .font-display { font-family: 'Playfair Display', serif; }
+     .font-body { font-family: 'Outfit', sans-serif; }
+     .fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
+     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+ </style>
  </head>
  <body class="h-full font-body">
   <div id="app" class="h-full w-full overflow-auto" style="background-color: #faf8f5;"><!-- Navigation -->
@@ -14,45 +26,161 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
      <div class="flex items-center justify-between h-16 sm:h-20"><!-- Logo -->
       <div class="flex items-center gap-2">
-       <a href="index.html" class="flex items-center gap-2">
-        <img src="images/evisu logo.png" alt="Logo" class="w-16 h-16 rounded-full object-cover">
-        <span class="font-display text-xl sm:text-2xl font-bold" style="color: #fdfcfc;">LỤC TIỂU MÀN THẦU SHOP</span>
-       </a>
+       <img id="logo-icon" src="images/evisu logo.png" alt="Logo" class="w-16 h-16 rounded-full object-cover">
+       <span id="store-name" class="font-display text-xl sm:text-2xl font-bold" style="color: #fdfcfc;">LỤC TIỂU MÀN THẦU SHOP</span>
       </div><!-- Desktop Nav -->
-      <div class="hidden md:flex items-center gap-8"><a href="index.html" class="nav-link text-sm font-medium tracking-wide" style="color: #eaeaea;">Trang chủ</a> <a href="index.html#products" class="nav-link text-sm font-medium tracking-wide" style="color: #5c5652;">Sản phẩm</a> <a href="index.html#categories" class="nav-link text-sm font-medium tracking-wide" style="color: #5c5652;">Danh mục</a> <a href="contact.html" class="nav-link text-sm font-medium tracking-wide" style="color: #5c5652;">Liên hệ</a>
+      <div class="hidden md:flex items-center gap-8"><a href="#" class="nav-link text-sm font-medium tracking-wide" style="color: #eaeaea;">Trang chủ</a> <a href="#products" class="nav-link text-sm font-medium tracking-wide" style="color: #5c5652;">Sản phẩm</a> <a href="#categories" class="nav-link text-sm font-medium tracking-wide" style="color: #5c5652;">Danh mục</a> <a href="contact.html" class="nav-link text-sm font-medium tracking-wide" style="color: #5c5652;">Liên hệ</a>
       </div><!-- Actions -->
-      <div class="flex items-center gap-3 sm:gap-4"><a href="index.html" class="p-2 rounded-full transition-colors hover:bg-white/50" style="color: #fffaf7;">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg></a> <a href="index.html" class="p-2 rounded-full transition-colors hover:bg-white/50" style="color: #e7e4e2;">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg></a> <a href="index.html" class="relative p-2 rounded-full transition-colors hover:bg-white/50" style="color: #f7f7f7;">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-        </svg></a>
+      <div class="flex items-center gap-3 sm:gap-4">
+        <button id="search-btn" class="p-2 rounded-full transition-colors hover:bg-white/50" style="color: #fffaf7;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        </button>
+        
+        <!-- NÚT YÊU THÍCH (ĐÃ THÊM MỚI) -->
+        <button id="fav-btn" class="relative p-2 rounded-full transition-colors hover:bg-white/50" style="color: #e7e4e2;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            <span id="fav-count" class="cart-badge absolute -top-1 -right-1 w-5 h-5 text-xs font-bold rounded-full flex items-center justify-center hidden" style="background-color: #ef4444; color: #ffffff;">0</span>
+        </button>
+
+        <button id="cart-btn" class="relative p-2 rounded-full transition-colors hover:bg-white/50" style="color: #f7f7f7;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+            <span id="cart-count" class="cart-badge absolute -top-1 -right-1 w-5 h-5 text-xs font-bold rounded-full flex items-center justify-center" style="background-color: #c9a87c; color: #2d2926;">0</span> 
+        </button>
       </div>
      </div>
     </div>
-   </nav><!-- Search Results Section -->
-   <section class="py-16 sm:py-24" style="background-color: #faf8f5;">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-     <div class="mb-12">
-      <h1 class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color: #2d2926;">Kết quả tìm kiếm</h1>
-      <p class="text-lg" style="color: #5c5652;">Tìm kiếm cho: <span id="search-query" class="font-bold" style="color: #2d2926;"></span></p>
-     </div>
-
-     <div id="search-results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-      <!-- Results will be displayed here -->
-     </div>
-
-     <div id="no-results" class="text-center py-16 hidden">
-      <div class="mb-6">
-       <svg class="w-24 h-24 mx-auto" style="color: #c9a87c;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-       </svg>
+   </nav><!-- Hero Section -->
+   <section class="relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-22">
+     <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <img id="san pham1" src="images/sản phẩm evisu.jpg" alt="sản phẩm evisu" class="w-full h-auto rounded-3xl shadow-lg object-cover fade-in" style="animation-delay: 0.5s;">
+      <div class="slide-in"><span class="inline-block px-4 py-1.5 rounded-full text-xs font-medium tracking-wider mb-6" style="background-color: #c9a87c; color: #2d2926;">BỘ SƯU TẬP MỚI 2026</span>
+       <h1 id="hero-title" class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6" style="color: #2d2926;">Định Nghĩa<br>
+        Phong Cách<br>
+        Của Bạn</h1>
+       <p id="hero-subtitle" class="text-lg sm:text-xl leading-relaxed mb-8 max-w-lg" style="color: #5c5652;">Khám phá bộ sưu tập thời trang cao cấp, nơi sự tinh tế gặp gỡ phong cách đương đại.</p>
+       <div class="flex flex-wrap gap-4"><a href="#products" class="btn-primary inline-flex items-center gap-2 px-8 py-4 rounded-full font-medium text-sm tracking-wide transition-all" style="background-color: #2d2926; color: #faf8f5;"> Khám phá ngay 
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+         </svg></a> <button class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-medium text-sm tracking-wide border-2 transition-all hover:bg-white/50" style="border-color: #2d2926; color: #2d2926;"> Xem lookbook </button>
+       </div>
       </div>
-      <h2 class="font-display text-2xl font-bold mb-2" style="color: #2d2926;">Không tìm thấy sản phẩm</h2>
-      <p style="color: #5c5652;" class="mb-6">Thử tìm kiếm với từ khóa khác hoặc quay lại trang chính</p>
-      <a href="index.html" class="inline-block px-8 py-3 rounded-full font-medium text-sm tracking-wide transition-all" style="background-color: #2d2926; color: #faf8f5;">Quay lại trang chính</a>
+        </div>
+       </div>
+      </div>
      </div>
+    </div>
+   </section><!-- Categories -->
+   <section id="categories" class="py-12 sm:py-16" style="background-color: #ffffff;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-10">
+      <h2 class="font-display text-3xl sm:text-4xl font-bold mb-4" style="color: #101010;">Danh mục sản phẩm</h2>
+      <p style="color: #5c5652;">Khám phá các danh mục thời trang đa dạng</p>
+     </div>
+     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+       <!-- CATEGORY: TRẺ EM (tre) -->
+       <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
+     onclick="filterProducts('tre')"
+     style="background-image: url('images/4bao.jpg');">
+             <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
+        <h3 class="font-display text-lg font-semibold mb-1" style="color: #fffefe;">BÁO tủi trẻ</h3>
+        <span class="text-sm" style="color: #ffffff;">128 sản phẩm</span>
+      </div>
+      </div>
+         <!-- CATEGORY: NAM -->
+         <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
+     onclick="filterProducts('Nam')"
+     style="background-image: url('images/baanhem.jpg');">
+       <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
+        <h3 class="font-display text-lg font-semibold mb-1" style="color: #fefefe;">Đồ Nam</h3><span class="text-sm" style="color: #ffffff;">96 sản phẩm</span>
+       </div>
+      </div>
+      <!-- CATEGORY: ÁO DÀI -->
+      <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
+     onclick="filterProducts('Áo dài')"
+     style="background-image: url('images/aodai1.jpg');">
+       <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
+        <h3 class="font-display text-lg font-semibold mb-1" style="color: #ffffff;">Áo Dài Tết</h3><span class="text-sm" style="color: #fafafa;">84 sản phẩm</span>
+       </div>
+      </div>
+            <!-- CATEGORY: VÁY -->
+            <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
+     onclick="filterProducts('Váy')"
+     style="background-image: url('images/vay.jpg');">
+       <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
+        <h3 class="font-display text-lg font-semibold mb-2" style="color: #f7f4f4;">Đồ Nữ</h3><span class="text-sm" style="color: #ffffff;">156 sản phẩm</span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Products -->
+   <section id="products" class="py-12 sm:py-16" style="background-color: #faf8f5;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+      <div>
+       <h2 class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color: #2d2926;">Sản phẩm nổi bật</h2>
+       <p style="color: #5c5652;">Được yêu thích nhất tuần này</p>
+      </div>
+      <!-- NÚT LỌC SẢN PHẨM -->
+      <div class="flex gap-2">
+        <button onclick="filterProducts('all')" class="px-4 py-2 rounded-full text-sm font-medium transition-colors border border-transparent hover:border-gray-400" style="background-color: #2d2926; color: #faf8f5;">Tất cả</button> 
+        <button onclick="filterProducts('Nam')" class="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Nam</button> 
+        <button onclick="filterProducts('Váy')" class="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Nữ/Váy</button>
+      </div>
+     </div>
+     <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"><!-- Products will be rendered here -->
+     </div>
+    </div>
+   </section><!-- Features -->
+   <!-- ... (Giữ nguyên phần Features) ... -->
+   <section class="py-12 sm:py-16" style="background-color: #2d2926;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+      <div class="text-center">
+       <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background-color: #c9a87c;">
+        <svg class="w-6 h-6" style="color: #2d2926;" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+        </svg>
+       </div>
+       <h3 class="font-medium mb-1" style="color: #faf8f5;">Miễn phí vận chuyển</h3>
+       <p class="text-sm" style="color: #a8a29e;">Đơn hàng từ 500K</p>
+      </div>
+      <div class="text-center">
+       <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background-color: #c9a87c;">
+        <svg class="w-6 h-6" style="color: #2d2926;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+       </div>
+       <h3 class="font-medium mb-1" style="color: #faf8f5;">Đổi trả 30 ngày</h3>
+       <p class="text-sm" style="color: #a8a29e;">Hoàn tiền 100%</p>
+      </div>
+      <div class="text-center">
+       <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background-color: #c9a87c;">
+        <svg class="w-6 h-6" style="color: #2d2926;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+       </div>
+       <h3 class="font-medium mb-1" style="color: #faf8f5;">Thanh toán an toàn</h3>
+       <p class="text-sm" style="color: #a8a29e;">Bảo mật SSL</p>
+      </div>
+      <div class="text-center">
+       <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-4" style="background-color: #c9a87c;">
+        <svg class="w-6 h-6" style="color: #2d2926;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+       </div>
+       <h3 class="font-medium mb-1" style="color: #faf8f5;">Hỗ trợ 24/7</h3>
+       <p class="text-sm" style="color: #a8a29e;">Hotline: 1900 1234</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Newsletter -->
+   <!-- ... (Giữ nguyên Newsletter, Footer, Cart Sidebar, Modals) ... -->
+   <section class="py-12 sm:py-16" style="background-color: #c9a87c;">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+     <h2 class="font-display text-3xl sm:text-4xl font-bold mb-4" style="color: #2d2926;">Đăng ký nhận ưu đãi</h2>
+     <p class="mb-8" style="color: #5c5652;">Nhận ngay voucher 100K cho đơn hàng đầu tiên</p>
+     <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"><input type="email" placeholder="Nhập email của bạn" class="flex-1 px-6 py-4 rounded-full text-sm focus:outline-none focus:ring-2" style="background-color: #faf8f5; color: #2d2926; --tw-ring-color: #2d2926;"> <button type="submit" class="btn-primary px-8 py-4 rounded-full font-medium text-sm tracking-wide transition-all" style="background-color: #2d2926; color: #faf8f5;"> Đăng ký </button>
+     </form>
+     <p id="newsletter-message" class="mt-4 text-sm hidden" style="color: #2d2926;"></p>
     </div>
    </section><!-- Footer -->
    <footer style="background-color: #1a1715;">
@@ -60,8 +188,9 @@
      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
       <div class="col-span-2 lg:col-span-1">
        <div class="flex items-center gap-2 mb-4">
-        <img src="images/evisu logo.png" alt="Logo" class="w-16 h-16 rounded-full object-cover">
-       </div><span class="font-display text-xl font-bold" style="color: #faf8f5;">LỤC TIỂU MÀN THẦU SHOP</span>
+        <img id="footer-logo-icon" src="images/evisu logo.png" alt="Logo" class="w-16 h-16 rounded-full object-cover">
+        </div><span class="font-display text-xl font-bold" style="color: #faf8f5;">LỤC TIỂU MÀN THẦU SHOP</span>
+       </div>
        <p class="text-sm mb-4" style="color: #a8a29e;">Thương hiệu thời trang cao cấp hàng đầu Việt Nam.</p>
        <div class="flex gap-3"><a href="#" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors" style="background-color: #2d2926; color: #faf8f5;"> <span>📘</span> </a> <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors" style="background-color: #2d2926; color: #faf8f5;"> <span>📸</span> </a> <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors" style="background-color: #2d2926; color: #faf8f5;"> <span>🎵</span> </a>
        </div>
@@ -95,7 +224,198 @@
       <p class="text-sm" style="color: #a8a29e;">© 2026 LỤC TIỂU MÀN THẦU. Tất cả quyền được bảo lưu.</p>
      </div>
     </div>
-   </footer><!-- Product Detail Modal -->
+   </footer><!-- Search Modal -->
+   <div id="search-overlay" class="fixed inset-0 bg-black/50 z-40 hidden opacity-0 transition-opacity duration-300"></div>
+   <div id="search-modal" class="fixed top-0 left-0 right-0 z-40 hidden opacity-0 transition-opacity duration-300 max-h-[90vh] overflow-auto" style="background-color: #faf8f5;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+     <div class="flex items-center justify-between mb-8">
+      <h2 class="font-display text-2xl font-bold" style="color: #2d2926;">Tìm kiếm sản phẩm</h2>
+      <button id="close-search" class="p-2 rounded-full transition-colors hover:bg-gray-200" style="color: #2d2926;">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+       </svg>
+      </button>
+     </div>
+     <div class="mb-8">
+      <input type="text" id="search-input" placeholder="Nhập tên sản phẩm..." class="w-full px-6 py-4 rounded-xl border-2 text-sm focus:outline-none focus:ring-2" style="border-color: #e8e4df; background-color: #ffffff; color: #2d2926; --tw-ring-color: #c9a87c;">
+     </div>
+     <div id="search-results" class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <!-- Search results will be displayed here -->
+     </div>
+     <div id="no-results" class="text-center py-12 hidden">
+      <p class="text-lg" style="color: #5c5652;">Không tìm thấy sản phẩm nào</p>
+     </div>
+    </div>
+   </div><!-- Footer --><!-- Cart Sidebar -->
+   <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
+   <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md z-50 transform translate-x-full transition-transform duration-300" style="background-color: #faf8f5;">
+    <div class="h-full flex flex-col">
+     <div class="flex items-center justify-between p-6 border-b" style="border-color: #e8e4df;">
+      <h3 class="font-display text-xl font-bold" style="color: #2d2926;">Giỏ hàng</h3><button id="close-cart" class="p-2 rounded-full transition-colors hover:bg-gray-100" style="color: #5c5652;">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+     <div id="cart-items" class="flex-1 overflow-auto p-6">
+      <div id="empty-cart" class="h-full flex flex-col items-center justify-center text-center">
+       <div class="w-20 h-20 rounded-full flex items-center justify-center mb-4" style="background-color: #e8e4df;"><span class="text-3xl">🛒</span>
+       </div>
+       <p class="font-medium mb-2" style="color: #2d2926;">Giỏ hàng trống</p>
+       <p class="text-sm" style="color: #5c5652;">Hãy thêm sản phẩm vào giỏ hàng</p>
+      </div>
+      <div id="cart-list" class="space-y-4 hidden"></div>
+     </div>
+     <div id="cart-footer" class="p-6 border-t hidden" style="border-color: #e8e4df;">
+      <div class="flex justify-between mb-4">
+        <span class="font-medium" style="color: #5c5652;">Tổng cộng:</span> 
+        <span id="cart-total" class="font-display text-xl font-bold" style="color: #2d2926;">0₫</span>
+      </div><button id="checkout-btn" class="btn-primary w-full py-4 rounded-full font-medium text-sm tracking-wide" style="background-color: #2d2926; color: #faf8f5;"> Đặt hàng </button>
+     </div>
+    </div>
+   </div>
+
+   <!-- Favorites Sidebar (ĐÃ THÊM MỚI) -->
+    <div id="fav-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
+    <div id="fav-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md z-50 transform translate-x-full transition-transform duration-300" style="background-color: #faf8f5;">
+        <div class="h-full flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b" style="border-color: #e8e4df;">
+                <h3 class="font-display text-xl font-bold" style="color: #2d2926;">Sản phẩm yêu thích ❤️</h3>
+                <button id="close-fav" class="p-2 rounded-full transition-colors hover:bg-gray-100" style="color: #5c5652;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div id="fav-items" class="flex-1 overflow-auto p-6">
+                <div id="empty-fav" class="h-full flex flex-col items-center justify-center text-center">
+                    <div class="w-20 h-20 rounded-full flex items-center justify-center mb-4" style="background-color: #ffe4e6;">
+                        <span class="text-3xl">💔</span>
+                    </div>
+                    <p class="font-medium mb-2" style="color: #2d2926;">Chưa có sản phẩm yêu thích</p>
+                    <p class="text-sm" style="color: #5c5652;">Hãy thả tim cho sản phẩm bạn thích nhé</p>
+                </div>
+                <div id="fav-list" class="space-y-4 hidden"></div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Toast -->
+   <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 hidden">
+    <div class="toast px-6 py-3 rounded-full shadow-lg flex items-center gap-2" style="background-color: #2d2926; color: #faf8f5;">
+     <svg class="w-5 h-5" style="color: #c9a87c;" fill="currentColor" viewbox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+     </svg><span id="toast-message">Đã thêm vào giỏ hàng</span>
+    </div>
+   </div><!-- Checkout Modal -->
+   <div id="checkout-overlay" class="fixed inset-0 bg-black/60 z-50 hidden opacity-0 transition-opacity duration-300"></div>
+   <div id="checkout-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl z-50 hidden opacity-0 scale-95 transition-all duration-300 max-h-[90vh] overflow-y-auto">
+    <div class="rounded-3xl shadow-2xl p-6 sm:p-8" style="background-color: #faf8f5;">
+     <div class="flex items-center justify-between mb-6">
+      <h2 class="font-display text-2xl sm:text-3xl font-bold" style="color: #2d2926;">Thông tin đặt hàng</h2><button id="close-checkout" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:bg-gray-100" style="color: #5c5652;">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+     <form id="checkout-form"><!-- Personal Information -->
+      <div class="mb-6">
+       <h3 class="font-medium text-sm mb-4" style="color: #2d2926;">Thông tin người nhận</h3>
+       <div class="space-y-4">
+        <div><label for="customer-name" class="block text-sm font-medium mb-2" style="color: #5c5652;">Họ và tên *</label> <input type="text" id="customer-name" required class="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all" style="border-color: #e8e4df; background-color: #ffffff; color: #2d2926; --tw-ring-color: #2d2926;" placeholder="Nguyễn Văn A">
+        </div>
+        <div><label for="customer-phone" class="block text-sm font-medium mb-2" style="color: #5c5652;">Số điện thoại *</label> <input type="tel" id="customer-phone" required class="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all" style="border-color: #e8e4df; background-color: #ffffff; color: #2d2926; --tw-ring-color: #2d2926;" placeholder="0912345678">
+        </div>
+        <div><label for="customer-email" class="block text-sm font-medium mb-2" style="color: #5c5652;">Email</label> <input type="email" id="customer-email" class="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all" style="border-color: #e8e4df; background-color: #ffffff; color: #2d2926; --tw-ring-color: #2d2926;" placeholder="example@email.com">
+        </div>
+        <div><label for="customer-address" class="block text-sm font-medium mb-2" style="color: #5c5652;">Địa chỉ giao hàng *</label> <textarea id="customer-address" required rows="3" class="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all" style="border-color: #e8e4df; background-color: #ffffff; color: #2d2926; --tw-ring-color: #2d2926;" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố"></textarea>
+        </div>
+        <div><label for="customer-note" class="block text-sm font-medium mb-2" style="color: #5c5652;">Ghi chú đơn hàng</label> <textarea id="customer-note" rows="2" class="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition-all" style="border-color: #e8e4df; background-color: #ffffff; color: #2d2926; --tw-ring-color: #2d2926;" placeholder="Ghi chú thêm về đơn hàng (tùy chọn)"></textarea>
+        </div>
+       </div>
+      </div><!-- Order Summary -->
+      <div class="mb-6 p-4 rounded-xl" style="background-color: #ffffff;">
+       <h3 class="font-medium text-sm mb-3" style="color: #2d2926;">Tóm tắt đơn hàng</h3>
+       <div id="checkout-items" class="space-y-2 mb-3"></div>
+       <div class="pt-3 border-t" style="border-color: #e8e4df;">
+        <div class="flex justify-between mb-2"><span class="text-sm" style="color: #5c5652;">Tạm tính:</span> <span id="checkout-subtotal" class="font-medium" style="color: #2d2926;">0₫</span>
+        </div>
+        <div class="flex justify-between mb-2"><span class="text-sm" style="color: #5c5652;">Phí vận chuyển:</span> <span class="font-medium" style="color: #c9a87c;">Miễn phí</span>
+        </div>
+        <div class="flex justify-between pt-2 border-t" style="border-color: #e8e4df;"><span class="font-medium" style="color: #2d2926;">Tổng cộng:</span> <span id="checkout-total" class="font-display text-xl font-bold" style="color: #2d2926;">0₫</span>
+        </div>
+       </div>
+      </div><!-- Payment Method -->
+      <div class="mb-6">
+       <h3 class="font-medium text-sm mb-4" style="color: #2d2926;">Phương thức thanh toán</h3>
+       <div class="space-y-3"><label class="flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all hover:border-opacity-70" style="border-color: #2d2926; background-color: #ffffff;"> <input type="radio" name="payment" value="cod" checked class="w-5 h-5" style="accent-color: #2d2926;">
+         <div class="flex-1"><span class="font-medium text-sm block" style="color: #2d2926;">Thanh toán khi nhận hàng (COD)</span> <span class="text-xs" style="color: #5c5652;">Thanh toán bằng tiền mặt khi nhận hàng</span>
+         </div></label> <label class="flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all hover:border-opacity-70" style="border-color: #e8e4df; background-color: #ffffff;"> <input type="radio" name="payment" value="bank" class="w-5 h-5" style="accent-color: #2d2926;">
+         <div class="flex-1"><span class="font-medium text-sm block" style="color: #2d2926;">Chuyển khoản ngân hàng</span> <span class="text-xs" style="color: #5c5652;">Chuyển khoản trước khi giao hàng</span>
+         </div></label>
+       </div><!-- Bank Transfer Info (Hidden by default) -->
+       <div id="bank-info" class="mt-4 p-4 rounded-xl hidden" style="background-color: #ffffff; border: 2px solid #c9a87c;">
+        <div class="flex flex-col items-center text-center mb-4">
+         <h4 class="font-medium mb-3" style="color: #2d2926;">Thông tin chuyển khoản</h4><!-- QR Code -->
+         <div class="w-48 h-48 mb-4 rounded-xl flex items-center justify-center" style="background-color: #ffffff; border: 2px solid #e8e4df;">
+          <svg id="qr-code" class="w-full h-full p-2"></svg>
+         </div>
+         <p class="text-xs mb-4" style="color: #5c5652;">Quét mã QR để chuyển khoản nhanh</p>
+        </div>
+        <div class="space-y-3">
+         <div class="p-3 rounded-lg" style="background-color: #faf8f5;">
+          <div class="flex justify-between items-center mb-1"><span class="text-xs" style="color: #5c5652;">Ngân hàng:</span> <span class="font-medium text-sm" style="color: #2d2926;">MB Bank</span>
+          </div>
+         </div>
+         <div class="p-3 rounded-lg" style="background-color: #faf8f5;">
+          <div class="flex justify-between items-center mb-1"><span class="text-xs" style="color: #5c5652;">Số tài khoản:</span>
+           <div class="flex items-center gap-2"><span id="account-number" class="font-medium text-sm" style="color: #2d2926;">0392732505</span> <button type="button" onclick="copyToClipboard('0392732505', 'Đã sao chép số tài khoản')" class="p-1 rounded transition-colors hover:bg-white" style="color: #c9a87c;">
+             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+             </svg></button>
+           </div>
+          </div>
+         </div>
+         <div class="p-3 rounded-lg" style="background-color: #faf8f5;">
+          <div class="flex justify-between items-center mb-1"><span class="text-xs" style="color: #5c5652;">Chủ tài khoản:</span> <span class="font-medium text-sm" style="color: #2d2926;">KIEU BAO CHANH</span>
+          </div>
+         </div>
+         <div class="p-3 rounded-lg" style="background-color: #faf8f5;">
+          <div class="flex justify-between items-center mb-1"><span class="text-xs" style="color: #5c5652;">Số tiền:</span>
+           <div class="flex items-center gap-2"><span id="transfer-amount" class="font-display font-bold text-sm" style="color: #c9a87c;">0₫</span> <button type="button" onclick="copyTransferAmount()" class="p-1 rounded transition-colors hover:bg-white" style="color: #c9a87c;">
+             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+             </svg></button>
+           </div>
+          </div>
+         </div>
+         <div class="p-3 rounded-lg" style="background-color: #faf8f5;">
+          <div class="flex justify-between items-start mb-1"><span class="text-xs" style="color: #5c5652;">Nội dung:</span>
+           <div class="flex items-center gap-2 flex-1 justify-end"><span id="transfer-content" class="font-medium text-sm text-right" style="color: #2d2926;">LUXE [MÃ ĐƠN]</span> <button type="button" onclick="copyTransferContent()" class="p-1 rounded transition-colors hover:bg-white flex-shrink-0" style="color: #c9a87c;">
+             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+             </svg></button>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="mt-4 p-3 rounded-lg flex items-start gap-2" style="background-color: #fff3e0;">
+         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color: #f57c00;" fill="currentColor" viewbox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+         </svg>
+         <div class="text-xs" style="color: #5c5652;"><span class="font-medium block mb-1">Lưu ý:</span> Vui lòng nhập <strong>chính xác nội dung chuyển khoản</strong> để đơn hàng được xử lý nhanh nhất.
+         </div>
+        </div>
+       </div>
+      </div><!-- Submit Button --> <button type="submit" id="submit-order-btn" class="btn-primary w-full py-4 rounded-full font-medium text-sm tracking-wide transition-all" style="background-color: #2d2926; color: #faf8f5;"> Xác nhận đặt hàng </button>
+     </form>
+    </div>
+   </div><!-- Order Success Modal -->
+   <div id="success-overlay" class="fixed inset-0 bg-black/60 z-50 hidden opacity-0 transition-opacity duration-300"></div>
+   <div id="success-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md z-50 hidden opacity-0 scale-95 transition-all duration-300">
+    <div class="rounded-3xl shadow-2xl p-8 text-center" style="background-color: #faf8f5;">
+     <div class="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4" style="background-color: #c9a87c;">
+      <svg class="w-10 h-10" style="color: #2d2926;" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+      </svg>
+     </div>
+     <h2 class="font-display text-2xl font-bold mb-2" style="color: #2d2926;">Đặt hàng thành công!</h2>
+     <p class="mb-2" style="color: #5c5652;">Mã đơn hàng của bạn:</p>
+     <p id="order-code" class="font-display text-xl font-bold mb-6" style="color: #c9a87c;">#LTMT-12345</p>
+     <p class="text-sm mb-6" style="color: #5c5652;">Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất để xác nhận đơn hàng.</p>
+     <button id="close-success" class="btn-primary w-full py-3 rounded-full font-medium text-sm tracking-wide" style="background-color: #2d2926; color: #faf8f5;"> Đóng </button>
+    </div>
+   </div><!-- Product Detail Modal -->
    <div id="product-modal-overlay" class="fixed inset-0 bg-black/60 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4"></div>
    <div id="product-modal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl z-50 hidden opacity-0 scale-95 transition-all duration-300">
     <div class="rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto" style="background-color: #faf8f5;">
@@ -155,16 +475,25 @@
         <div class="mt-6 pt-6 border-t" style="border-color: #e8e4df;">
          <div class="grid grid-cols-3 gap-4 text-center">
           <div>
-           <h3 class="font-medium text-xs mb-1" style="color: #5c5652;">Giao hàng miễn phí</h3>
-           <p class="text-sm" style="color: #2d2926;">Đơn từ 500K</p>
+           <div class="w-10 h-10 mx-auto rounded-full flex items-center justify-center mb-2" style="background-color: #e8e4df;">
+            <svg class="w-5 h-5" style="color: #2d2926;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+           </div>
+           <p class="text-xs" style="color: #5c5652;">Miễn phí ship</p>
           </div>
           <div>
-           <h3 class="font-medium text-xs mb-1" style="color: #5c5652;">Hỗ trợ 24/7</h3>
-           <p class="text-sm" style="color: #2d2926;">1900 1234</p>
+           <div class="w-10 h-10 mx-auto rounded-full flex items-center justify-center mb-2" style="background-color: #e8e4df;">
+            <svg class="w-5 h-5" style="color: #2d2926;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+           </div>
+           <p class="text-xs" style="color: #5c5652;">Đổi trả 30 ngày</p>
           </div>
           <div>
-           <h3 class="font-medium text-xs mb-1" style="color: #5c5652;">Đổi trả 30 ngày</h3>
-           <p class="text-sm" style="color: #2d2926;">Hoàn tiền 100%</p>
+           <div class="w-10 h-10 mx-auto rounded-full flex items-center justify-center mb-2" style="background-color: #e8e4df;">
+            <svg class="w-5 h-5" style="color: #2d2926;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+           </div>
+           <p class="text-xs" style="color: #5c5652;">Hàng chính hãng</p>
           </div>
          </div>
         </div>
@@ -174,48 +503,350 @@
     </div>
    </div>
   </div>
-
   <script>
-    // Color configuration
-    const config = {
-      primary_action_color: '#c9a87c',
-      secondary_action_color: '#2d2926',
-      text_color: '#2d2926',
+
+    // Default configuration
+    const defaultConfig = {
+      store_name: 'LỤC TIỂU MÀN THẦU',
+      logo_emoji: '📦',
+      hero_title: 'Phong Cách\nĐịnh Nghĩa\nBạn',
+      hero_subtitle: 'Khám phá bộ sưu tập thời trang cao cấp, nơi sự tinh tế gặp gỡ phong cách đương đại.',
       background_color: '#faf8f5',
-      surface_color: '#ffffff'
+      surface_color: '#ffffff',
+      text_color: '#2d2926',
+      primary_action_color: '#2d2926',
+      secondary_action_color: '#c9a87c',
+      font_family: 'Outfit',
+      font_size: 16
     };
 
-    // Load cart from localStorage
+    let config = { ...defaultConfig };
     let cart = JSON.parse(localStorage.getItem('lucj_cart')) || [];
+    // --- THÊM KHAI BÁO BIẾN FAVORITES ---
+    let favorites = JSON.parse(localStorage.getItem('lucj_favorites')) || [];
 
-    // Products data
+    // Product data
     const products = [
-      { id: 2, name: 'Váy Midi Elegant', price: 1290000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'] },
-      { id: 3, name: 'Áo dài thanh xuân vườn trường', price: 890000, originalPrice: null, badge: null,  image: 'images/18.jpg', images: ['images/18.jpg', 'images/19.jpg', 'images/20.jpg'] },
-      { id: 4, name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'] },
-      { id: 5, name: 'Set Xanh Nhí Nhảnh', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/21.jpg', images: ['images/21.jpg', 'images/22.jpg', 'images/23.jpg'] },
-      { id: 6, name: 'Set Đồ Đi Đồi Đà Lạt', price: 1190000, originalPrice: null, badge: null, image: 'images/thanh.jpg', images: ['images/thanh.jpg', 'images/thanhnui.jpg', 'images/tuannui.jpg'] },
-      { id: 7, name: 'Áo dài hồng phấn họa tiết nổi', price: 1590000, originalPrice: 1990000, badge: 'Sale', image: 'images/aodai2.jpg', images: ['images/aodai2.jpg', 'images/aodai3.jpg'] },
-      { id: 9, name: 'Áo dài hồng phấn họa tiết nổi', price: 1590000, originalPrice: 1990000, badge: 'Sale', image: 'images/aodai2.jpg', images: ['images/aodai2.jpg', 'images/aodai3.jpg'] },
-      { id: 10, name: 'Áo cô em nhà bên (cũ)', price: 190000, originalPrice: null, badge: null, image: 'images/aocu.jpg', images: ['images/aocu.jpg', 'images/aocu1.jpg',] },
-      { id: 11, name: 'Áo dài xanh lục', price: 290000, originalPrice: null, badge: null, image: 'images/thao0.jpg', images: ['images/thao0.jpg', 'images/thao1.jpg', 'images/thao.jpg'] },
-      { id: 12, name: 'set đi biển em gái Jennie ', price: 90000, originalPrice: null, badge: null, image: 'images/jen.jpg', images: ['images/jen.jpg', 'images/jen1.jpg','images/jen1.jpg','images/jen2.jpg'] },
-      { id: 13, name: 'váy phi hành gia trẻ em ( tặng kèm kính bơi, nón kết, giày, cây xanh) ', price: 100000, originalPrice: null, badge: null, image: 'images/phi.jpg', images: ['images/phi.jpg', 'images/phi1.jpg','images/phi0.jpg'] },
-      { id: 14, name: 'set đi biển trẻ em ', price: 90000, originalPrice: null, badge: null, image: 'images/dibientreem.jpg', images: ['images/dibientreem.jpg', 'images/dibientreem0.jpg'] },
-      { id: 15, name: 'set đồ nhập ngũ trẻ em', price: 90000, originalPrice: null, badge: null, image: 'images/ngu.jpg', images: ['images/ngu.jpg', 'images/ngu0.jpg'] },
-      { id: 16, name: 'set đồ công chúa Disney', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/dis.jpg', images: ['images/dis.jpg', 'images/dis1.jpg', 'images/dis0.jpg'] },
-      { id: 17, name: 'set streetstyle secondhand của Chy Pu ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/hanh.jpg', images: ['images/hanh.jpg', 'images/hanh1.jpg',] },
-      { id: 18, name: 'combo du xuân cho 2 chị em cây khế ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/2chiem.jpg', images: ['images/2chiem.jpg', 'images/2chiem1.jpg',] },
-      { id: 19, name: 'set Xuân Bính Ngọ 2026 tặng (thêm con Ngọ)', price: 690000, originalPrice: 1890000, badge: 'New', image: 'images/ngo.jpg', images: ['images/ngo.jpg', 'images/ngo0.jpg',] },
-      { id: 20, name: 'set đồ đi biển cho nàng thơ', price:188000, originalPrice: null, badge: null, image: 'images/hanh0.jpg', images: ['images/hanh0.jpg', 'images/bien.jpg',] },
+      { id: 1, name: 'Áo Dài Tết cho các chị em', price: 189000, originalPrice: 269000, badge: 'Sale', image: 'images/aodai1.jpg', images: ['images/aodai1.jpg', 'images/aodai.jpg'], category: 'Áo dài Váy' },
+      { id: 2, name: 'Váy Midi Elegant', price: 129000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'],  category: 'Váy' },
+      { id: 3, name: 'Áo dài thanh xuân vườn trường', price: 490000, originalPrice: null, badge: null,  image: 'images/20.jpg', images: ['images/20.jpg', 'images/19.jpg', 'images/18.jpg'], category: 'Áo dài Váy'},
+      { id: 4, name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'], category:'Nam' },
+      { id: 5, name: 'Set Xanh Nhí Nhảnh', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/21.jpg', images: ['images/21.jpg', 'images/22.jpg', 'images/23.jpg'], category:'Váy' },
+      { id: 6, name: 'Set Đồ Đi Đồi Đà Lạt', price: 1190000, originalPrice: null, badge: 'New', image: 'images/thanh.jpg', images: ['images/thanh.jpg', 'images/thanhnui.jpg', 'images/tuannui.jpg'], category:'Nam' },
+      { id: 9, name: 'Áo dài hồng phấn họa tiết nổi', price: 1590000, originalPrice: 1990000, badge: 'Sale', image: 'images/aodai2.jpg', images:['images/aodai2.jpg','images/aodai3.jpg'], category:'Áo dài' },
+      { id: 10, name: 'Áo cô em nhà bên (cũ)', price: 190000, originalPrice: null, badge: null, image: 'images/aocu.jpg', images: ['images/aocu.jpg', 'images/aocu1.jpg',], category: 'Váy' },
+      { id: 11, name: 'Áo dài xanh lục', price: 290000, originalPrice: null, badge: null, image: 'images/thao0.jpg', images: ['images/thao0.jpg', 'images/thao1.jpg', 'images/thao.jpg'], category: 'Áo dài Váy' },
+      { id: 12, name: 'set đi biển em gái Jennie ', price: 90000, originalPrice: null, badge: null, image: 'images/jen.jpg', images: ['images/jen.jpg', 'images/jen1.jpg','images/jen1.jpg','images/jen2.jpg'], category: 'tre' },
+      { id: 13, name: 'váy phi hành gia trẻ em', price: 100000, originalPrice: null, badge: null, image: 'images/phi.jpg', images: ['images/phi.jpg', 'images/phi1.jpg','images/phi0.jpg'], category: 'tre' },
+      { id: 14, name: 'set đi biển trẻ em ', price: 90000, originalPrice: null, badge: null, image: 'images/dibientreem.jpg', images: ['images/dibientreem.jpg', 'images/dibientreem0.jpg'], category: 'tre' },
+      { id: 15, name: 'set đồ nhập ngũ trẻ em', price: 90000, originalPrice: null, badge: null, image: 'images/ngu.jpg', images: ['images/ngu.jpg', 'images/ngu0.jpg'], category: 'tre' },
+      { id: 16, name: 'set đồ công chúa Disney', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/dis.jpg', images: ['images/dis.jpg', 'images/dis1.jpg', 'images/dis0.jpg'], category: 'tre'},
+      { id: 17, name: 'set streetstyle secondhand của Chy Pu ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/hanh.jpg', images: ['images/hanh.jpg', 'images/hanh1.jpg',], category: 'Váy' },
+      { id: 18, name: 'combo du xuân cho 2 chị em cây khế ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/2chiem.jpg', images: ['images/2chiem.jpg', 'images/2chiem1.jpg',], category: 'Áo dài Váy' },
+      { id: 19, name: 'set Xuân Bính Ngọ 2026', price: 690000, originalPrice: 1890000, badge: 'New', image: 'images/ngo.jpg', images: ['images/ngo.jpg', 'images/ngo0.jpg',], category: 'Váy' },
+      { id: 20, name: 'set đồ đi biển cho nàng thơ', price:188000, originalPrice: null, badge: null, image: 'images/hanh0.jpg', images: ['images/hanh0.jpg', 'images/bien.jpg',], category: 'Váy' },
       { id: 21, name: 'set váy dài áo trễ vai', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/vaydai.jpg', images: ['images/vaydai.jpg', 'images/vaydai0.jpg', 'images/vaydai1.jpg'], category: 'Váy' },
-      { id: 22, name: 'Áo Dài Cổ Điển', price:588000, originalPrice: null, badge: 'Hot', image: 'images/nhi.jpg', images: ['images/nhi.jpg', 'images/nhi1.jpg','images/nhi0.jpg'], category: 'Áo dài' },
+      { id:22, name: 'Áo Dài Cổ Điển', price:588000, originalPrice: null, badge: 'Hot', image: 'images/nhi.jpg', images: ['images/nhi.jpg', 'images/nhi1.jpg','images/nhi0.jpg'], category: 'Áo dài' },
       { id: 23, name: 'Con chó bị bỏ đói', price: 100000, originalPrice: null, badge: null, image: 'images/cho.jpg', images: ['images/cho.jpg'], category: 'tre' },
     ];
 
     // Format price
     function formatPrice(price) {
       return new Intl.NumberFormat('vi-VN').format(price) + '₫';
+    }
+
+    // Render products - CẬP NHẬT ĐỂ NHẬN DANH SÁCH LỌC VÀ HIỂN THỊ NÚT TIM
+    function renderProducts(listToRender = products) {
+      const grid = document.getElementById('product-grid');
+      
+      if (listToRender.length === 0) {
+        grid.innerHTML = '<div class="col-span-2 lg:col-span-4 text-center py-10"><p style="color: #5c5652;">Không tìm thấy sản phẩm nào thuộc danh mục này.</p></div>';
+        return;
+      }
+
+      grid.innerHTML = listToRender.map((product, index) => {
+        // Kiểm tra xem sản phẩm này đã được like chưa
+        const isFav = favorites.includes(product.id);
+        const heartClass = isFav ? 'fill-red-500 text-red-500' : 'text-white hover:text-red-200';
+
+        return `
+        <div class="product-card rounded-2xl overflow-hidden shadow-sm cursor-pointer fade-in" style="background-color: ${config.surface_color}; animation-delay: ${index * 0.05}s;" onclick="openProductModal(${product.id})">
+          <div class="relative aspect-[3/4] overflow-hidden" style="background: linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%);">
+           <div class="product-image absolute inset-0">
+            <img src="${product.image}" 
+                 alt="${product.name}" 
+                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            </div>
+            ${product.badge ? `<span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style="background-color: ${config.secondary_action_color}; color: ${config.text_color};">${product.badge}</span>` : ''}
+            
+            <!-- NÚT TIM (MỚI) -->
+            <button onclick="event.stopPropagation(); toggleFavorite(${product.id})" class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 z-10" style="background-color: rgba(0,0,0,0.2);">
+                <svg class="w-5 h-5 transition-colors ${heartClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+            </button>
+
+            <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-3 right-3 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="background-color: ${config.primary_action_color}; color: ${config.background_color};">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+              </svg>
+            </button>
+          </div>
+          <div class="p-4">
+            <h3 class="font-medium text-sm mb-2 truncate" style="color: ${config.text_color};">${product.name}</h3>
+            <div class="flex items-center gap-2">
+              <span class="font-display font-bold" style="color: ${config.text_color};">${formatPrice(product.price)}</span>
+              ${product.originalPrice ? `<span class="text-sm line-through" style="color: #a8a29e;">${formatPrice(product.originalPrice)}</span>` : ''}
+            </div>
+          </div>
+        </div>
+      `}).join('');
+    }
+
+    // --- MỚI: CÁC HÀM XỬ LÝ YÊU THÍCH ---
+    function toggleFavorite(productId) {
+        const index = favorites.indexOf(productId);
+        if (index === -1) {
+            favorites.push(productId);
+            showToast('Đã thêm vào yêu thích ❤️');
+        } else {
+            favorites.splice(index, 1);
+            showToast('Đã xóa khỏi yêu thích 💔');
+        }
+        
+        // Lưu vào localStorage
+        localStorage.setItem('lucj_favorites', JSON.stringify(favorites));
+        
+        // Cập nhật giao diện
+        renderProducts(); // Render lại để đổi màu tim
+        updateFavCount();
+        renderFavoritesList();
+    }
+
+    function updateFavCount() {
+        const countEl = document.getElementById('fav-count');
+        if (favorites.length > 0) {
+            countEl.textContent = favorites.length;
+            countEl.classList.remove('hidden');
+        } else {
+            countEl.classList.add('hidden');
+        }
+    }
+
+    function renderFavoritesList() {
+        const listEl = document.getElementById('fav-list');
+        const emptyEl = document.getElementById('empty-fav');
+        
+        if (favorites.length === 0) {
+            listEl.classList.add('hidden');
+            emptyEl.classList.remove('hidden');
+            return;
+        }
+
+        emptyEl.classList.add('hidden');
+        listEl.classList.remove('hidden');
+
+        // Lọc ra các sản phẩm có ID nằm trong danh sách favorites
+        const favProducts = products.filter(p => favorites.includes(p.id));
+
+        listEl.innerHTML = favProducts.map(item => `
+            <div class="flex gap-4 p-3 rounded-xl relative group" style="background-color: ${config.surface_color};">
+                <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0" style="background-color: #e8e4df;">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 min-w-0 pr-6">
+                    <h4 class="font-medium text-sm mb-1 truncate">${item.name}</h4>
+                    <p class="font-display font-bold text-sm mb-2 text-red-500">${formatPrice(item.price)}</p>
+                    
+                    <button onclick="addToCart(${item.id}); toggleFavorite(${item.id}); toggleFavSidebar(false);" class="text-xs px-3 py-1.5 rounded-full bg-black text-white hover:bg-gray-800 transition-colors">
+                        Thêm vào giỏ
+                    </button>
+                </div>
+                <!-- Nút xóa nhanh -->
+                <button onclick="toggleFavorite(${item.id})" class="absolute top-2 right-2 text-gray-400 hover:text-red-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+        `).join('');
+    }
+
+    function toggleFavSidebar(show) {
+        const overlay = document.getElementById('fav-overlay');
+        const sidebar = document.getElementById('fav-sidebar');
+        
+        if (show) {
+            renderFavoritesList();
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                sidebar.classList.remove('translate-x-full');
+            }, 10);
+        } else {
+            overlay.classList.add('opacity-0');
+            sidebar.classList.add('translate-x-full');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
+        }
+    }
+
+    function filterProducts(categoryName) {
+      let filteredList = [];
+
+      if (categoryName === 'all') {
+        filteredList = products;
+      } else {
+        // Lọc không phân biệt hoa thường
+        filteredList = products.filter(p => 
+          p.category && p.category.toLowerCase().includes(categoryName.toLowerCase())
+        );
+      }
+
+      // Render lại danh sách
+      renderProducts(filteredList);
+
+      // Tự động cuộn xuống phần sản phẩm
+      document.getElementById('products').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+      
+      // Update màu nút bấm
+      updateActiveFilterButton(categoryName);
+    }
+
+    function updateActiveFilterButton(activeName) {
+        const buttons = document.querySelectorAll('#products button');
+        buttons.forEach(btn => {
+            const btnText = btn.textContent.toLowerCase();
+            const isActive = (activeName === 'all' && btnText.includes('tất cả')) || 
+                             (activeName !== 'all' && btnText.includes(activeName.toLowerCase())) ||
+                             (activeName === 'Váy' && btnText.includes('nữ'));
+
+            if (isActive) {
+                btn.style.backgroundColor = '#2d2926';
+                btn.style.color = '#faf8f5';
+                btn.style.borderColor = 'transparent';
+            } else {
+                btn.style.backgroundColor = 'transparent';
+                btn.style.color = '#5c5652';
+                btn.style.borderColor = 'transparent';
+            }
+        });
+    }
+
+    // Add to cart
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      const existingItem = cart.find(item => item.id === productId);
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+
+      updateCart();
+      showToast('Đã thêm vào giỏ hàng');
+    }
+
+    // Remove from cart
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCart();
+    }
+
+    // Update quantity
+    function updateQuantity(productId, delta) {
+      const item = cart.find(item => item.id === productId);
+      if (!item) return;
+
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        removeFromCart(productId);
+      } else {
+        updateCart();
+      }
+    }
+
+    // Update cart UI
+    function updateCart() {
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+      document.getElementById('cart-count').textContent = count;
+      document.getElementById('cart-total').textContent = formatPrice(total);
+
+      const emptyCart = document.getElementById('empty-cart');
+      const cartList = document.getElementById('cart-list');
+      const cartFooter = document.getElementById('cart-footer');
+
+      if (cart.length === 0) {
+        emptyCart.classList.remove('hidden');
+        cartList.classList.add('hidden');
+        cartFooter.classList.add('hidden');
+      } else {
+        emptyCart.classList.add('hidden');
+        cartList.classList.remove('hidden');
+        cartFooter.classList.remove('hidden');
+
+        cartList.innerHTML = cart.map(item => `
+          <div class="flex gap-4 p-3 rounded-xl" style="background-color: ${config.surface_color};">
+            <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0" style="background-color: #e8e4df;">
+              <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+              <h4 class="font-medium text-sm mb-1 truncate" style="color: ${config.text_color};">${item.name}</h4>
+              <p class="font-display font-bold text-sm mb-2" style="color: ${config.text_color};">${formatPrice(item.price)}</p>
+              <div class="flex items-center gap-2">
+                <button onclick="updateQuantity(${item.id}, -1)" class="w-7 h-7 rounded-full flex items-center justify-center transition-colors" style="background-color: #e8e4df; color: ${config.text_color};">−</button>
+                <span class="w-8 text-center text-sm font-medium" style="color: ${config.text_color};">${item.quantity}</span>
+                <button onclick="updateQuantity(${item.id}, 1)" class="w-7 h-7 rounded-full flex items-center justify-center transition-colors" style="background-color: #e8e4df; color: ${config.text_color};">+</button>
+                <button onclick="removeFromCart(${item.id})" class="ml-auto p-1 transition-colors" style="color: #a8a29e;">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Save cart to localStorage
+      localStorage.setItem('lucj_cart', JSON.stringify(cart));
+    }
+
+    // Toggle cart
+    function toggleCart(show) {
+      const overlay = document.getElementById('cart-overlay');
+      const sidebar = document.getElementById('cart-sidebar');
+
+      if (show) {
+        overlay.classList.remove('hidden');
+        setTimeout(() => {
+          overlay.classList.remove('opacity-0');
+          sidebar.classList.remove('translate-x-full');
+        }, 10);
+      } else {
+        overlay.classList.add('opacity-0');
+        sidebar.classList.add('translate-x-full');
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    // Show toast
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      toastMessage.textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2500);
     }
 
     // Product modal state
@@ -359,42 +990,209 @@
       closeProductModal();
     }
 
-    // Get URL parameters
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-    }
+    // Update UI based on config
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
 
-    // Perform search on page load
-    function init() {
-      const query = getQueryParam('q');
+      // Update store name
+      const storeNameEl = document.getElementById('store-name');
+      if (storeNameEl) storeNameEl.textContent = config.store_name || defaultConfig.store_name;
+
+      // Update logo emoji
+      const logoIconEl = document.getElementById('logo-icon');
+      if (logoIconEl) {
+        const logoEmoji = config.logo_emoji || defaultConfig.logo_emoji;
+        logoIconEl.querySelector('span').textContent = logoEmoji;
+      }
       
-      if (!query) {
-        document.getElementById('no-results').classList.remove('hidden');
-        return;
+      const footerLogoIconEl = document.getElementById('footer-logo-icon');
+      if (footerLogoIconEl) {
+        const logoEmoji = config.logo_emoji || defaultConfig.logo_emoji;
+        footerLogoIconEl.querySelector('span').textContent = logoEmoji;
       }
 
-      document.getElementById('search-query').textContent = `"${query}"`;
+      // Update hero title
+      const heroTitleEl = document.getElementById('hero-title');
+      if (heroTitleEl) {
+        const titleText = config.hero_title || defaultConfig.hero_title;
+        heroTitleEl.innerHTML = titleText.replace(/\n/g, '<br/>');
+      }
 
-      const filtered = products.filter(product => 
-        product.name.toLowerCase().includes(query.toLowerCase())
-      );
+      // Update hero subtitle
+      const heroSubtitleEl = document.getElementById('hero-subtitle');
+      if (heroSubtitleEl) heroSubtitleEl.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
 
+      // Re-render products with updated colors
+      renderProducts();
+      updateCart();
+    }
+
+    // Map to capabilities
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => { config.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => { config.primary_action_color = value; window.elementSdk.setConfig({ primary_action_color: value }); }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => { config.secondary_action_color = value; window.elementSdk.setConfig({ secondary_action_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => { config.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => { config.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
+        }
+      };
+    }
+
+    // Map to edit panel values
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['store_name', config.store_name || defaultConfig.store_name],
+        ['logo_emoji', config.logo_emoji || defaultConfig.logo_emoji],
+        ['hero_title', config.hero_title || defaultConfig.hero_title],
+        ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle]
+      ]);
+    }
+
+    // Copy to clipboard function
+    function copyToClipboard(text, message) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(message);
+      }).catch(() => {
+        showToast('Không thể sao chép');
+      });
+    }
+
+    // Copy transfer amount (number only, no currency symbol)
+    function copyTransferAmount() {
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      copyToClipboard(total.toString(), 'Đã sao chép số tiền');
+    }
+
+    // Copy transfer content
+    let currentOrderCode = '';
+    function copyTransferContent() {
+      const content = document.getElementById('transfer-content').textContent;
+      copyToClipboard(content, 'Đã sao chép nội dung chuyển khoản');
+    }
+
+    // Generate QR Code for bank transfer
+    function generateQRCode(amount, content) {
+      // Bank info
+      const bankId = '970436'; // Vietcombank bank code
+      const accountNo = '1234567890';
+      const accountName = 'LỤC TIỂU MÀN THẦU';
+      
+      // Create VietQR format URL
+      const qrData = `https://img.vietqr.io/image/${bankId}-${accountNo}-compact2.jpg?amount=${amount}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent(accountName)}`;
+      
+      // Display QR as image instead of SVG
+      const qrContainer = document.getElementById('qr-code');
+      qrContainer.innerHTML = `<image href="${qrData}" width="100%" height="100%" style="border-radius: 8px;" />`;
+    }
+
+    // Toggle bank info visibility
+    function toggleBankInfo(show) {
+      const bankInfo = document.getElementById('bank-info');
+      
+      if (show) {
+        bankInfo.classList.remove('hidden');
+        
+        // Update transfer amount
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        document.getElementById('transfer-amount').textContent = formatPrice(total);
+        
+        // Generate order code for transfer content
+        currentOrderCode = 'ORD' + Date.now().toString().slice(-6);
+        const transferContent = `LUXE ${currentOrderCode}`;
+        document.getElementById('transfer-content').textContent = transferContent;
+        
+        // Generate QR code
+        generateQRCode(total, transferContent);
+      } else {
+        bankInfo.classList.add('hidden');
+      }
+    }
+
+    // Search functions
+    function openSearch() {
+      const modal = document.getElementById('search-modal');
+      const overlay = document.getElementById('search-overlay');
+      modal.classList.remove('hidden');
+      overlay.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        overlay.classList.remove('opacity-0');
+        document.getElementById('search-input').focus();
+      }, 10);
+    }
+
+    function closeSearch() {
+      const modal = document.getElementById('search-modal');
+      const overlay = document.getElementById('search-overlay');
+      modal.classList.add('opacity-0');
+      overlay.classList.add('opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        overlay.classList.add('hidden');
+        document.getElementById('search-input').value = '';
+      }, 300);
+    }
+
+    function performSearch() {
+      const query = document.getElementById('search-input').value.toLowerCase();
       const resultsContainer = document.getElementById('search-results');
       const noResults = document.getElementById('no-results');
 
+      if (!query.trim()) {
+        resultsContainer.innerHTML = '';
+        noResults.classList.add('hidden');
+        return;
+      }
+
+      const filtered = products.filter(product => 
+        product.name.toLowerCase().includes(query)
+      );
+
       if (filtered.length === 0) {
+        resultsContainer.innerHTML = '';
         noResults.classList.remove('hidden');
       } else {
+        noResults.classList.add('hidden');
         resultsContainer.innerHTML = filtered.map((product, index) => `
-          <div class="product-card rounded-2xl overflow-hidden shadow-sm cursor-pointer" style="background-color: ${config.surface_color}; animation-delay: ${index * 0.1}s;" onclick="goToProduct(${product.id})">
+          <div class="product-card rounded-2xl overflow-hidden shadow-sm cursor-pointer" style="background-color: ${config.surface_color};" onclick="openProductModal(${product.id})">
             <div class="relative aspect-[3/4] overflow-hidden" style="background: linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%);">
              <div class="product-image absolute inset-0">
       <img src="${product.image}" 
            alt="${product.name}" 
            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
     </div>
-              ${product.badge ? `<span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style="background-color: ${config.secondary_action_color}; color: ${config.background_color};">${product.badge}</span>` : ''}
+              ${product.badge ? `<span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style="background-color: ${config.secondary_action_color}; color: ${config.text_color};">${product.badge}</span>` : ''}
+              <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-3 right-3 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="background-color: ${config.primary_action_color}; color: ${config.background_color};">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+              </button>
             </div>
             <div class="p-4">
               <h3 class="font-medium text-sm mb-2 truncate" style="color: ${config.text_color};">${product.name}</h3>
@@ -408,28 +1206,58 @@
       }
     }
 
-    function goToProduct(productId) {
-      openProductModal(productId);
-    }
+    // Initialize
+    function init() {
+      // Render initial products
+      renderProducts();
 
-    // Initialize on page load
-    function initModal() {
-      // Cart array
-      let cart = [];
+      // Update cart display from localStorage
+      updateCart();
 
-      // Modal event listeners
+      // --- CẬP NHẬT INIT ---
+      updateFavCount(); // Hiện số lượng yêu thích
+      
+      // Events cho sidebar yêu thích
+      document.getElementById('fav-btn').addEventListener('click', () => toggleFavSidebar(true));
+      document.getElementById('close-fav').addEventListener('click', () => toggleFavSidebar(false));
+      document.getElementById('fav-overlay').addEventListener('click', () => toggleFavSidebar(false));
+      // ---------------------
+
+      // Cart button
+      document.getElementById('cart-btn').addEventListener('click', () => toggleCart(true));
+      document.getElementById('close-cart').addEventListener('click', () => toggleCart(false));
+      document.getElementById('cart-overlay').addEventListener('click', () => toggleCart(false));
+
+      // Payment method change listener
+      document.querySelectorAll('input[name="payment"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          toggleBankInfo(e.target.value === 'bank');
+        });
+      });
+
+      // Product modal
       document.getElementById('close-modal').addEventListener('click', closeProductModal);
       document.getElementById('product-modal-overlay').addEventListener('click', closeProductModal);
       document.getElementById('modal-qty-minus').addEventListener('click', () => updateModalQuantity(-1));
       document.getElementById('modal-qty-plus').addEventListener('click', () => updateModalQuantity(1));
       document.getElementById('modal-add-cart').addEventListener('click', addFromModalToCart);
-      
+
+      // Check if coming from search and open product
+      const selectedProductId = localStorage.getItem('selectedProductId');
+      if (selectedProductId) {
+        const productId = parseInt(selectedProductId);
+        localStorage.removeItem('selectedProductId');
+        setTimeout(() => {
+          openProductModal(productId);
+        }, 300);
+      }
+
       // Carousel controls
       document.getElementById('carousel-prev').addEventListener('click', prevSlide);
       document.getElementById('carousel-next').addEventListener('click', nextSlide);
-      
+
       // Size selection
-      document.querySelectorAll('.size-btn').forEach((btn) => {
+      document.querySelectorAll('.size-btn').forEach((btn, index) => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
           selectedSize = btn.textContent;
@@ -443,30 +1271,252 @@
           btn.style.borderColor = config.primary_action_color;
         });
       });
+
+      // Newsletter form
+      document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const messageEl = document.getElementById('newsletter-message');
+        messageEl.textContent = 'Cảm ơn bạn đã đăng ký! Voucher đã được gửi đến email của bạn.';
+        messageEl.classList.remove('hidden');
+        e.target.reset();
+        setTimeout(() => messageEl.classList.add('hidden'), 5000);
+      });
+
+      // Checkout button
+      document.getElementById('checkout-btn').addEventListener('click', openCheckout);
+
+      // Checkout modal
+      document.getElementById('close-checkout').addEventListener('click', closeCheckout);
+      document.getElementById('checkout-overlay').addEventListener('click', closeCheckout);
+
+      // Checkout form
+      document.getElementById('checkout-form').addEventListener('submit', handleCheckoutSubmit);
+
+      // Success modal
+      document.getElementById('close-success').addEventListener('click', closeSuccess);
+      document.getElementById('success-overlay').addEventListener('click', closeSuccess);
+
+      // Search functionality
+      document.getElementById('search-btn').addEventListener('click', openSearch);
+      document.getElementById('close-search').addEventListener('click', closeSearch);
+      document.getElementById('search-overlay').addEventListener('click', closeSearch);
+      document.getElementById('search-input').addEventListener('input', performSearch);
+      document.getElementById('search-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const query = document.getElementById('search-input').value.trim();
+          if (query) {
+            window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+          }
+        }
+      });
+
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+      }
     }
 
-    function showToast(message) {
-      // Simple toast notification
-      const toast = document.createElement('div');
-      toast.textContent = message;
-      toast.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background-color: #2d2926; color: #faf8f5; padding: 12px 24px; border-radius: 50px; font-size: 14px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);';
-      document.body.appendChild(toast);
+    // Open checkout modal
+    function openCheckout() {
+      if (cart.length === 0) {
+        showToast('Giỏ hàng trống. Vui lòng thêm sản phẩm!');
+        return;
+      }
+
+      // Update checkout items
+      const checkoutItems = document.getElementById('checkout-items');
+      checkoutItems.innerHTML = cart.map(item => `
+        <div class="flex justify-between text-sm">
+          <span style="color: #5c5652;">${item.name} × ${item.quantity}</span>
+          <span class="font-medium" style="color: #2d2926;">${formatPrice(item.price * item.quantity)}</span>
+        </div>
+      `).join('');
+
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      document.getElementById('checkout-subtotal').textContent = formatPrice(total);
+      document.getElementById('checkout-total').textContent = formatPrice(total);
+
+      // Close cart sidebar
+      toggleCart(false);
+
+      // Show checkout modal
+      const overlay = document.getElementById('checkout-overlay');
+      const modal = document.getElementById('checkout-modal');
       
-      // Fade out animation
+      overlay.classList.remove('hidden');
+      modal.classList.remove('hidden');
+      
       setTimeout(() => {
-        toast.style.transition = 'opacity 0.3s ease';
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-      }, 2700);
+        overlay.classList.remove('opacity-0');
+        modal.classList.remove('opacity-0', 'scale-95');
+        modal.classList.add('scale-100');
+      }, 10);
     }
 
-    function updateCart() {
-      // Save cart to localStorage
-      localStorage.setItem('lucj_cart', JSON.stringify(cart));
+    // Close checkout modal
+    function closeCheckout() {
+      const overlay = document.getElementById('checkout-overlay');
+      const modal = document.getElementById('checkout-modal');
+      
+      overlay.classList.add('opacity-0');
+      modal.classList.add('opacity-0', 'scale-95');
+      modal.classList.remove('scale-100');
+      
+      setTimeout(() => {
+        overlay.classList.add('hidden');
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    // Handle checkout form submission
+    function handleCheckoutSubmit(e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submit-order-btn');
+      const originalText = submitBtn.textContent;
+
+      // Get form data
+      const customerName = document.getElementById('customer-name').value;
+      const customerPhone = document.getElementById('customer-phone').value;
+      const customerEmail = document.getElementById('customer-email').value;
+      const customerAddress = document.getElementById('customer-address').value;
+
+      // Generate order code
+      const orderCode = 'ORD-' + Date.now().toString().slice(-8);
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang xử lý...';
+      submitBtn.style.opacity = '0.7';
+
+      // Prepare order data
+      const orderData = {
+        orderCode: orderCode,
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerEmail: customerEmail,
+        customerAddress: customerAddress,
+        items: cart,
+        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+        paymentMethod: document.querySelector('input[name="payment"]:checked').value
+      };
+
+      // Send email notification
+      sendOrderEmail(orderData, customerEmail, () => {
+        // Callback after email is sent
+        document.getElementById('order-code').textContent = '#' + orderCode;
+
+        // Close checkout modal
+        closeCheckout();
+
+        // Show success modal after checkout closes
+        setTimeout(() => {
+          const successOverlay = document.getElementById('success-overlay');
+          const successModal = document.getElementById('success-modal');
+          
+          successOverlay.classList.remove('hidden');
+          successModal.classList.remove('hidden');
+          
+          setTimeout(() => {
+            successOverlay.classList.remove('opacity-0');
+            successModal.classList.remove('opacity-0', 'scale-95');
+            successModal.classList.add('scale-100');
+          }, 10);
+
+          // Clear cart
+          cart = [];
+          updateCart();
+
+          // Reset form
+          document.getElementById('checkout-form').reset();
+
+          // Reset button
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          submitBtn.style.opacity = '1';
+        }, 350);
+      });
+    }
+
+    // Send order email
+    function sendOrderEmail(orderData, customerEmail, callback) {
+      // Create email content  
+      const itemsList = orderData.items.map(item => `- ${item.name} x${item.quantity}: ${formatPrice(item.price * item.quantity)}`).join('\n');
+      
+      const emailContent = `Cảm ơn bạn đã đặt hàng tại LỤC TIỂU MÀN THẦU SHOP!
+
+Mã đơn hàng: ${orderData.orderCode}
+Tên khách hàng: ${orderData.customerName}
+Số điện thoại: ${orderData.customerPhone}
+Địa chỉ: ${orderData.customerAddress}
+
+Chi tiết đơn hàng:
+${itemsList}
+
+Tổng tiền: ${formatPrice(orderData.total)}
+Phương thức thanh toán: ${orderData.paymentMethod === 'cod' ? 'Thanh toán khi nhận hàng' : 'Chuyển khoản'}
+
+Chúng tôi sẽ liên hệ bạn sớm nhất có thể để xác nhận đơn hàng.
+
+Cảm ơn bạn đã tin tưởng LỤC TIỂU MÀN THẦU SHOP!
+
+Liên hệ:
+📍 12A1 THPT TRẦN PHÚ
+📞 1900 1234
+✉️ chanhbaochanh@gmail.com`;
+
+      // Send email using EmailJS
+      const templateParams = {
+        to_email: customerEmail,
+        customer_name: orderData.customerName,
+        order_code: orderData.orderCode,
+        customer_phone: orderData.customerPhone,
+        customer_address: orderData.customerAddress,
+        order_details: itemsList,
+        total_amount: formatPrice(orderData.total),
+        payment_method: orderData.paymentMethod === 'cod' ? 'Thanh toán khi nhận hàng' : 'Chuyển khoản',
+        message: emailContent
+      };
+
+      emailjs.send('service_os3amkw', 'template_r8bsrww', templateParams)
+        .then(response => {
+          console.log('Email sent to customer:', response);
+          // Also send to shop owner
+          templateParams.to_email = 'chanhbaochanh@gmail.com';
+          return emailjs.send('service_os3amkw', 'template_r8bsrww', templateParams);
+        })
+        .then(response => {
+          console.log('Email sent to shop:', response);
+          callback();
+        })
+        .catch(error => {
+          console.log('Email error:', error);
+          // Still proceed with order even if email fails
+          callback();
+        });
+    }
+
+    // Close success modal
+    function closeSuccess() {
+      const overlay = document.getElementById('success-overlay');
+      const modal = document.getElementById('success-modal');
+      
+      overlay.classList.add('opacity-0');
+      modal.classList.add('opacity-0', 'scale-95');
+      modal.classList.remove('scale-100');
+      
+      setTimeout(() => {
+        overlay.classList.add('hidden');
+        modal.classList.add('hidden');
+      }, 300);
     }
 
     init();
-    initModal();
   </script>
  </body>
 </html>
