@@ -7,18 +7,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Outfit:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
  <script>
   // Initialize EmailJS
   emailjs.init('8yQGhNkEkpiSFTBr8');
  </script>
- <style>
-     .font-display { font-family: 'Playfair Display', serif; }
-     .font-body { font-family: 'Outfit', sans-serif; }
-     .fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
-     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
- </style>
  </head>
  <body class="h-full font-body">
   <div id="app" class="h-full w-full overflow-auto" style="background-color: #faf8f5;"><!-- Navigation -->
@@ -31,23 +26,13 @@
       </div><!-- Desktop Nav -->
       <div class="hidden md:flex items-center gap-8"><a href="#" class="nav-link text-sm font-medium tracking-wide" style="color: #eaeaea;">Trang chủ</a> <a href="#products" class="nav-link text-sm font-medium tracking-wide" style="color: #5c5652;">Sản phẩm</a> <a href="#categories" class="nav-link text-sm font-medium tracking-wide" style="color: #5c5652;">Danh mục</a> <a href="contact.html" class="nav-link text-sm font-medium tracking-wide" style="color: #5c5652;">Liên hệ</a>
       </div><!-- Actions -->
-      <div class="flex items-center gap-3 sm:gap-4">
-        <button id="search-btn" class="p-2 rounded-full transition-colors hover:bg-white/50" style="color: #fffaf7;">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-        </button>
-        
-        <!-- NÚT YÊU THÍCH (ĐÃ THÊM MỚI) -->
-        <button id="fav-btn" class="relative p-2 rounded-full transition-colors hover:bg-white/50" style="color: #e7e4e2;">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-            <span id="fav-count" class="cart-badge absolute -top-1 -right-1 w-5 h-5 text-xs font-bold rounded-full flex items-center justify-center hidden" style="background-color: #ef4444; color: #ffffff;">0</span>
-        </button>
-
-        <button id="cart-btn" class="relative p-2 rounded-full transition-colors hover:bg-white/50" style="color: #f7f7f7;">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
-            <span id="cart-count" class="cart-badge absolute -top-1 -right-1 w-5 h-5 text-xs font-bold rounded-full flex items-center justify-center" style="background-color: #c9a87c; color: #2d2926;">0</span> 
-        </button>
+      <div class="flex items-center gap-3 sm:gap-4"><button id="search-btn" class="p-2 rounded-full transition-colors hover:bg-white/50" style="color: #fffaf7;">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg></button> <button class="p-2 rounded-full transition-colors hover:bg-white/50" style="color: #e7e4e2;">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg></button> <button id="cart-btn" class="relative p-2 rounded-full transition-colors hover:bg-white/50" style="color: #f7f7f7;">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg><span id="cart-count" class="cart-badge absolute -top-1 -right-1 w-5 h-5 text-xs font-bold rounded-full flex items-center justify-center" style="background-color: #c9a87c; color: #2d2926;">0</span> </button>
       </div>
      </div>
     </div>
@@ -79,39 +64,34 @@
       <p style="color: #5c5652;">Khám phá các danh mục thời trang đa dạng</p>
      </div>
      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-       <!-- CATEGORY: TRẺ EM (tre) -->
-       <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
-     onclick="filterProducts('tre')"
-     style="background-image: url('images/4bao.jpg');">
-             <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
-        <h3 class="font-display text-lg font-semibold mb-1" style="color: #fffefe;">BÁO tủi trẻ</h3>
-        <span class="text-sm" style="color: #ffffff;">128 sản phẩm</span>
+       <a href="#products" data-category-link="bao-tuoi-tre" class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center block"
+           style="background-image:
+             url('images/4bao.jpg');">
+             <div class="h-full flex flex-col items-center justify-center p-6 text-center">
+        <h3 class="font-display text-lg font-semibold mb-1" style="color: #fffefe;">BÁO tủi trẻ</h3><span class="text-sm" style="color: #ffffff;">128 sản phẩm</span>
       </div>
-      </div>
-         <!-- CATEGORY: NAM -->
-         <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
-     onclick="filterProducts('Nam')"
-     style="background-image: url('images/baanhem.jpg');">
-       <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
+      </a>
+         <a href="#products" data-category-link="do-nam" class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center block"
+           style="background-image:
+             url('images/baanhem.jpg');">
+       <div class="h-full flex flex-col items-center justify-center p-6 text-center">
         <h3 class="font-display text-lg font-semibold mb-1" style="color: #fefefe;">Đồ Nam</h3><span class="text-sm" style="color: #ffffff;">96 sản phẩm</span>
        </div>
-      </div>
-      <!-- CATEGORY: ÁO DÀI -->
-      <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
-     onclick="filterProducts('Áo dài')"
-     style="background-image: url('images/aodai1.jpg');">
-       <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
-        <h3 class="font-display text-lg font-semibold mb-1" style="color: #ffffff;">Áo Dài Tết</h3><span class="text-sm" style="color: #fafafa;">84 sản phẩm</span>
+      </a>
+      <a href="#products" data-category-link="ao-dai-tet" class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center block"
+           style="background-image:
+             url('images/aodai1.jpg');">
+       <div class="h-full flex flex-col items-center justify-center p-6 text-center">
+        <h3 class="font-display text-lg font-semibold mb-1" style="color: #ffffff;">Áo dài tết</h3><span class="text-sm" style="color: #fafafa;">84 sản phẩm</span>
        </div>
-      </div>
-            <!-- CATEGORY: VÁY -->
-            <div class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center"
-     onclick="filterProducts('Váy')"
-     style="background-image: url('images/vay.jpg');">
-       <div class="h-full flex flex-col items-center justify-center p-6 text-center bg-black/20 hover:bg-black/40 transition-all">
-        <h3 class="font-display text-lg font-semibold mb-2" style="color: #f7f4f4;">Đồ Nữ</h3><span class="text-sm" style="color: #ffffff;">156 sản phẩm</span>
+      </a>
+            <a href="#products" data-category-link="vay" class="category-card group cursor-pointer rounded-2xl overflow-hidden aspect-[3/4] bg-cover bg-center block"
+           style="background-image:
+             url('images/vay.jpg');">
+       <div class="h-full flex flex-col items-center justify-center p-6 text-center">
+        <h3 class="font-display text-lg font-semibold mb-2" style="color: #f7f4f4;">Váy</h3><span class="text-sm" style="color: #ffffff;">156 sản phẩm</span>
        </div>
-      </div>
+      </a>
      </div>
     </div>
    </section><!-- Products -->
@@ -120,20 +100,15 @@
      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
       <div>
        <h2 class="font-display text-3xl sm:text-4xl font-bold mb-2" style="color: #2d2926;">Sản phẩm nổi bật</h2>
-       <p style="color: #5c5652;">Được yêu thích nhất tuần này</p>
+       <p id="products-subtitle" style="color: #5c5652;">Được yêu thích nhất tuần này</p>
       </div>
-      <!-- NÚT LỌC SẢN PHẨM -->
-      <div class="flex gap-2">
-        <button onclick="filterProducts('all')" class="px-4 py-2 rounded-full text-sm font-medium transition-colors border border-transparent hover:border-gray-400" style="background-color: #2d2926; color: #faf8f5;">Tất cả</button> 
-        <button onclick="filterProducts('Nam')" class="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Nam</button> 
-        <button onclick="filterProducts('Váy')" class="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Nữ/Váy</button>
+      <div class="flex gap-2 flex-wrap"><button data-filter="all" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors" style="background-color: #2d2926; color: #faf8f5;">Tất cả</button> <button data-filter="bao-tuoi-tre" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">BÁO tủi trẻ</button> <button data-filter="do-nam" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Đồ Nam</button> <button data-filter="ao-dai-tet" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Áo dài tết</button> <button data-filter="vay" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-white" style="color: #5c5652;">Váy</button>
       </div>
      </div>
      <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"><!-- Products will be rendered here -->
      </div>
     </div>
    </section><!-- Features -->
-   <!-- ... (Giữ nguyên phần Features) ... -->
    <section class="py-12 sm:py-16" style="background-color: #2d2926;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
@@ -173,7 +148,6 @@
      </div>
     </div>
    </section><!-- Newsletter -->
-   <!-- ... (Giữ nguyên Newsletter, Footer, Cart Sidebar, Modals) ... -->
    <section class="py-12 sm:py-16" style="background-color: #c9a87c;">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
      <h2 class="font-display text-3xl sm:text-4xl font-bold mb-4" style="color: #2d2926;">Đăng ký nhận ưu đãi</h2>
@@ -271,32 +245,7 @@
       </div><button id="checkout-btn" class="btn-primary w-full py-4 rounded-full font-medium text-sm tracking-wide" style="background-color: #2d2926; color: #faf8f5;"> Đặt hàng </button>
      </div>
     </div>
-   </div>
-
-   <!-- Favorites Sidebar (ĐÃ THÊM MỚI) -->
-    <div id="fav-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
-    <div id="fav-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md z-50 transform translate-x-full transition-transform duration-300" style="background-color: #faf8f5;">
-        <div class="h-full flex flex-col">
-            <div class="flex items-center justify-between p-6 border-b" style="border-color: #e8e4df;">
-                <h3 class="font-display text-xl font-bold" style="color: #2d2926;">Sản phẩm yêu thích ❤️</h3>
-                <button id="close-fav" class="p-2 rounded-full transition-colors hover:bg-gray-100" style="color: #5c5652;">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-            </div>
-            <div id="fav-items" class="flex-1 overflow-auto p-6">
-                <div id="empty-fav" class="h-full flex flex-col items-center justify-center text-center">
-                    <div class="w-20 h-20 rounded-full flex items-center justify-center mb-4" style="background-color: #ffe4e6;">
-                        <span class="text-3xl">💔</span>
-                    </div>
-                    <p class="font-medium mb-2" style="color: #2d2926;">Chưa có sản phẩm yêu thích</p>
-                    <p class="text-sm" style="color: #5c5652;">Hãy thả tim cho sản phẩm bạn thích nhé</p>
-                </div>
-                <div id="fav-list" class="space-y-4 hidden"></div>
-            </div>
-        </div>
-    </div>
-
-   <!-- Toast -->
+   </div><!-- Toast -->
    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 hidden">
     <div class="toast px-6 py-3 rounded-full shadow-lg flex items-center gap-2" style="background-color: #2d2926; color: #faf8f5;">
      <svg class="w-5 h-5" style="color: #c9a87c;" fill="currentColor" viewbox="0 0 20 20">
@@ -391,8 +340,7 @@
          </div>
         </div>
         <div class="mt-4 p-3 rounded-lg flex items-start gap-2" style="background-color: #fff3e0;">
-         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color: #f57c00;" fill="currentColor" viewbox="0 0 20 20">
-          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+         <svg class="w-5 h-5 flex-shrink-0 mt-0.5" style="color: #f57c00;" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
          </svg>
          <div class="text-xs" style="color: #5c5652;"><span class="font-medium block mb-1">Lưu ý:</span> Vui lòng nhập <strong>chính xác nội dung chuyển khoản</strong> để đơn hàng được xử lý nhanh nhất.
          </div>
@@ -427,6 +375,7 @@
        <div class="aspect-square md:aspect-auto relative" style="background: linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%);">
         <div class="relative w-full h-full">
           <img id="modal-image" src="images/donam.jpg" alt="Product" class="w-full h-full object-cover">
+          <video id="modal-video" class="w-full h-full object-cover hidden" controls playsinline preload="metadata"></video>
           <!-- Navigation Arrows -->
           <button id="carousel-prev" class="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:bg-white/80" style="background-color: rgba(255, 255, 255, 0.6); color: #2d2926;">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
@@ -504,7 +453,6 @@
    </div>
   </div>
   <script>
-
     // Default configuration
     const defaultConfig = {
       store_name: 'LỤC TIỂU MÀN THẦU',
@@ -522,32 +470,32 @@
 
     let config = { ...defaultConfig };
     let cart = JSON.parse(localStorage.getItem('lucj_cart')) || [];
-    // --- THÊM KHAI BÁO BIẾN FAVORITES ---
-    let favorites = JSON.parse(localStorage.getItem('lucj_favorites')) || [];
 
     // Product data
+    <!-- mãng aray trong java -->
     const products = [
-      { id: 1, name: 'Áo Dài Tết cho các chị em', price: 189000, originalPrice: 269000, badge: 'Sale', image: 'images/aodai1.jpg', images: ['images/aodai1.jpg', 'images/aodai.jpg'], category: 'Áo dài Váy' },
-      { id: 2, name: 'Váy Midi Elegant', price: 129000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'],  category: 'Váy' },
-      { id: 3, name: 'Áo dài thanh xuân vườn trường', price: 490000, originalPrice: null, badge: null,  image: 'images/20.jpg', images: ['images/20.jpg', 'images/19.jpg', 'images/18.jpg'], category: 'Áo dài Váy'},
-      { id: 4, name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'], category:'Nam' },
-      { id: 5, name: 'Set Xanh Nhí Nhảnh', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/21.jpg', images: ['images/21.jpg', 'images/22.jpg', 'images/23.jpg'], category:'Váy' },
-      { id: 6, name: 'Set Đồ Đi Đồi Đà Lạt', price: 1190000, originalPrice: null, badge: 'New', image: 'images/thanh.jpg', images: ['images/thanh.jpg', 'images/thanhnui.jpg', 'images/tuannui.jpg'], category:'Nam' },
-      { id: 9, name: 'Áo dài hồng phấn họa tiết nổi', price: 1590000, originalPrice: 1990000, badge: 'Sale', image: 'images/aodai2.jpg', images:['images/aodai2.jpg','images/aodai3.jpg'], category:'Áo dài' },
-      { id: 10, name: 'Áo cô em nhà bên (cũ)', price: 190000, originalPrice: null, badge: null, image: 'images/aocu.jpg', images: ['images/aocu.jpg', 'images/aocu1.jpg',], category: 'Váy' },
-      { id: 11, name: 'Áo dài xanh lục', price: 290000, originalPrice: null, badge: null, image: 'images/thao0.jpg', images: ['images/thao0.jpg', 'images/thao1.jpg', 'images/thao.jpg'], category: 'Áo dài Váy' },
-      { id: 12, name: 'set đi biển em gái Jennie ', price: 90000, originalPrice: null, badge: null, image: 'images/jen.jpg', images: ['images/jen.jpg', 'images/jen1.jpg','images/jen1.jpg','images/jen2.jpg'], category: 'tre' },
-      { id: 13, name: 'váy phi hành gia trẻ em', price: 100000, originalPrice: null, badge: null, image: 'images/phi.jpg', images: ['images/phi.jpg', 'images/phi1.jpg','images/phi0.jpg'], category: 'tre' },
-      { id: 14, name: 'set đi biển trẻ em ', price: 90000, originalPrice: null, badge: null, image: 'images/dibientreem.jpg', images: ['images/dibientreem.jpg', 'images/dibientreem0.jpg'], category: 'tre' },
-      { id: 15, name: 'set đồ nhập ngũ trẻ em', price: 90000, originalPrice: null, badge: null, image: 'images/ngu.jpg', images: ['images/ngu.jpg', 'images/ngu0.jpg'], category: 'tre' },
-      { id: 16, name: 'set đồ công chúa Disney', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/dis.jpg', images: ['images/dis.jpg', 'images/dis1.jpg', 'images/dis0.jpg'], category: 'tre'},
-      { id: 17, name: 'set streetstyle secondhand của Chy Pu ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/hanh.jpg', images: ['images/hanh.jpg', 'images/hanh1.jpg',], category: 'Váy' },
+      { id: 1, category: 'ao-dai-tet', name: 'Áo Dài Tết cho các chị em', price: 1890000, originalPrice: 2690000, badge: 'Sale', image: 'images/aodai1.jpg', images: ['images/aodai1.jpg', 'images/aodai.jpg'], video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
+      { id: 2, category: 'vay', name: 'Váy Midi Elegant', price: 1290000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'], video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4' },
+      { id: 3, category: 'ao-dai-tet', name: 'Áo dài thanh xuân vườn trường', price: 890000, originalPrice: null, badge: null,  image: 'images/20.jpg', images: ['images/20.jpg', 'images/19.jpg', 'images/18.jpg'] },
+      { id: 4, category: 'do-nam', name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'], video: 'https://www.w3schools.com/html/movie.mp4' },
+      { id: 5, category: 'bao-tuoi-tre', name: 'Set Xanh Nhí Nhảnh', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/21.jpg', images: ['images/21.jpg', 'images/22.jpg', 'images/23.jpg'] },
+      { id: 6, category: 'do-nam', name: 'Set Đồ Đi Đồi Đà Lạt', price: 1190000, originalPrice: null, badge: null, image: 'images/thanh.jpg', images: ['images/thanh.jpg', 'images/thanhnui.jpg', 'images/tuannui.jpg'] },
+      { id: 9, category: 'ao-dai-tet', name: 'Áo dài hồng phấn họa tiết nổi', price: 1590000, originalPrice: 1990000, badge: 'Sale', image: 'images/aodai2.jpg', images: ['images/aodai2.jpg', 'images/aodai3.jpg'] },
+      { id: 10, category: 'bao-tuoi-tre', name: 'Áo cô em nhà bên (cũ)', price: 190000, originalPrice: null, badge: null, image: 'images/aocu.jpg', images: ['images/aocu.jpg', 'images/aocu1.jpg',] },
+      { id: 11, category: 'ao-dai-tet', name: 'Áo dài xanh lục', price: 290000, originalPrice: null, badge: null, image: 'images/thao0.jpg', images: ['images/thao0.jpg', 'images/thao1.jpg', 'images/thao.jpg'] },
+      { id: 12, category: 'vay', name: 'set đi biển em gái Jennie ', price: 90000, originalPrice: null, badge: null, image: 'images/jen.jpg', images: ['images/jen.jpg', 'images/jen1.jpg','images/jen1.jpg','images/jen2.jpg'] },
+      { id: 13, category: 'vay', name: 'váy phi hành gia trẻ em ( tặng kèm kính bơi, nón kết, giày, cây xanh) ', price: 100000, originalPrice: null, badge: null, image: 'images/phi.jpg', images: ['images/phi.jpg', 'images/phi1.jpg','images/phi0.jpg'] },
+      { id: 14, category: 'bao-tuoi-tre', name: 'set đi biển trẻ em ', price: 90000, originalPrice: null, badge: null, image: 'images/dibientreem.jpg', images: ['images/dibientreem.jpg', 'images/dibientreem0.jpg'] },
+      { id: 15, category: 'do-nam', name: 'set đồ nhập ngũ trẻ em', price: 90000, originalPrice: null, badge: null, image: 'images/ngu.jpg', images: ['images/ngu.jpg', 'images/ngu0.jpg'] },
+      { id: 16, category: 'vay', name: 'set đồ công chúa Disney', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/dis.jpg', images: ['images/dis.jpg', 'images/dis1.jpg', 'images/dis0.jpg'] },
+      { id: 17, category: 'bao-tuoi-tre', name: 'set streetstyle secondhand của Chy Pu ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/hanh.jpg', images: ['images/hanh.jpg', 'images/hanh1.jpg',] },
       { id: 18, name: 'combo du xuân cho 2 chị em cây khế ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/2chiem.jpg', images: ['images/2chiem.jpg', 'images/2chiem1.jpg',], category: 'Áo dài Váy' },
       { id: 19, name: 'set Xuân Bính Ngọ 2026', price: 690000, originalPrice: 1890000, badge: 'New', image: 'images/ngo.jpg', images: ['images/ngo.jpg', 'images/ngo0.jpg',], category: 'Váy' },
       { id: 20, name: 'set đồ đi biển cho nàng thơ', price:188000, originalPrice: null, badge: null, image: 'images/hanh0.jpg', images: ['images/hanh0.jpg', 'images/bien.jpg',], category: 'Váy' },
       { id: 21, name: 'set váy dài áo trễ vai', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/vaydai.jpg', images: ['images/vaydai.jpg', 'images/vaydai0.jpg', 'images/vaydai1.jpg'], category: 'Váy' },
       { id:22, name: 'Áo Dài Cổ Điển', price:588000, originalPrice: null, badge: 'Hot', image: 'images/nhi.jpg', images: ['images/nhi.jpg', 'images/nhi1.jpg','images/nhi0.jpg'], category: 'Áo dài' },
       { id: 23, name: 'Con chó bị bỏ đói', price: 100000, originalPrice: null, badge: null, image: 'images/cho.jpg', images: ['images/cho.jpg'], category: 'tre' },
+      {id: 24, name: 'ao phit Valentine đa dạng phương tiện', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/helo.jpeg', images: ['images/helo.jpeg',], video:'videos/helo.mp4', category: 'Áo dài' }
     ];
 
     // Format price
@@ -555,37 +503,54 @@
       return new Intl.NumberFormat('vi-VN').format(price) + '₫';
     }
 
-    // Render products - CẬP NHẬT ĐỂ NHẬN DANH SÁCH LỌC VÀ HIỂN THỊ NÚT TIM
-    function renderProducts(listToRender = products) {
-      const grid = document.getElementById('product-grid');
-      
-      if (listToRender.length === 0) {
-        grid.innerHTML = '<div class="col-span-2 lg:col-span-4 text-center py-10"><p style="color: #5c5652;">Không tìm thấy sản phẩm nào thuộc danh mục này.</p></div>';
-        return;
+    const categoryLabelMap = {
+      all: 'Tất cả sản phẩm',
+      'bao-tuoi-tre': 'Danh mục: BÁO tủi trẻ',
+      'do-nam': 'Danh mục: Đồ Nam',
+      'ao-dai-tet': 'Danh mục: Áo dài tết',
+      vay: 'Danh mục: Váy'
+    };
+
+    let activeProductFilter = 'all';
+
+    function getFilteredProducts() {
+      if (activeProductFilter === 'all') return products;
+      return products.filter(product => product.category === activeProductFilter);
+    }
+
+    function updateFilterButtons() {
+      document.querySelectorAll('.filter-btn').forEach((button) => {
+        const isActive = button.dataset.filter === activeProductFilter;
+        button.style.backgroundColor = isActive ? config.primary_action_color : 'transparent';
+        button.style.color = isActive ? config.background_color : '#5c5652';
+      });
+
+      const subtitle = document.getElementById('products-subtitle');
+      if (subtitle) {
+        subtitle.textContent = categoryLabelMap[activeProductFilter] || categoryLabelMap.all;
       }
+    }
 
-      grid.innerHTML = listToRender.map((product, index) => {
-        // Kiểm tra xem sản phẩm này đã được like chưa
-        const isFav = favorites.includes(product.id);
-        const heartClass = isFav ? 'fill-red-500 text-red-500' : 'text-white hover:text-red-200';
+    function applyProductFilter(filter) {
+      activeProductFilter = filter;
+      renderProducts();
+      updateFilterButtons();
+    }
 
-        return `
-        <div class="product-card rounded-2xl overflow-hidden shadow-sm cursor-pointer fade-in" style="background-color: ${config.surface_color}; animation-delay: ${index * 0.05}s;" onclick="openProductModal(${product.id})">
+    // Render products
+    function renderProducts() {
+      const grid = document.getElementById('product-grid');
+      const visibleProducts = getFilteredProducts();
+      grid.innerHTML = visibleProducts.map((product, index) => `
+        <div class="product-card rounded-2xl overflow-hidden shadow-sm cursor-pointer" style="background-color: ${config.surface_color}; animation-delay: ${index * 0.1}s;" onclick="openProductModal(${product.id})">
           <div class="relative aspect-[3/4] overflow-hidden" style="background: linear-gradient(135deg, #e8e4df 0%, #d4cfc8 100%);">
            <div class="product-image absolute inset-0">
-            <img src="${product.image}" 
-                 alt="${product.name}" 
-                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-            </div>
-            ${product.badge ? `<span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style="background-color: ${config.secondary_action_color}; color: ${config.text_color};">${product.badge}</span>` : ''}
-            
-            <!-- NÚT TIM (MỚI) -->
-            <button onclick="event.stopPropagation(); toggleFavorite(${product.id})" class="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 z-10" style="background-color: rgba(0,0,0,0.2);">
-                <svg class="w-5 h-5 transition-colors ${heartClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-            </button>
+  <img src="${product.image}" 
+       alt="${product.name}" 
+       class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+</div>
 
+            ${product.badge ? `<span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style="background-color: ${config.secondary_action_color}; color: ${config.text_color};">${product.badge}</span>` : ''}
             <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-3 right-3 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="background-color: ${config.primary_action_color}; color: ${config.background_color};">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -600,139 +565,22 @@
             </div>
           </div>
         </div>
-      `}).join('');
+      `).join('');
     }
 
-    // --- MỚI: CÁC HÀM XỬ LÝ YÊU THÍCH ---
-    function toggleFavorite(productId) {
-        const index = favorites.indexOf(productId);
-        if (index === -1) {
-            favorites.push(productId);
-            showToast('Đã thêm vào yêu thích ❤️');
-        } else {
-            favorites.splice(index, 1);
-            showToast('Đã xóa khỏi yêu thích 💔');
-        }
-        
-        // Lưu vào localStorage
-        localStorage.setItem('lucj_favorites', JSON.stringify(favorites));
-        
-        // Cập nhật giao diện
-        renderProducts(); // Render lại để đổi màu tim
-        updateFavCount();
-        renderFavoritesList();
-    }
-
-    function updateFavCount() {
-        const countEl = document.getElementById('fav-count');
-        if (favorites.length > 0) {
-            countEl.textContent = favorites.length;
-            countEl.classList.remove('hidden');
-        } else {
-            countEl.classList.add('hidden');
-        }
-    }
-
-    function renderFavoritesList() {
-        const listEl = document.getElementById('fav-list');
-        const emptyEl = document.getElementById('empty-fav');
-        
-        if (favorites.length === 0) {
-            listEl.classList.add('hidden');
-            emptyEl.classList.remove('hidden');
-            return;
-        }
-
-        emptyEl.classList.add('hidden');
-        listEl.classList.remove('hidden');
-
-        // Lọc ra các sản phẩm có ID nằm trong danh sách favorites
-        const favProducts = products.filter(p => favorites.includes(p.id));
-
-        listEl.innerHTML = favProducts.map(item => `
-            <div class="flex gap-4 p-3 rounded-xl relative group" style="background-color: ${config.surface_color};">
-                <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0" style="background-color: #e8e4df;">
-                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
-                </div>
-                <div class="flex-1 min-w-0 pr-6">
-                    <h4 class="font-medium text-sm mb-1 truncate">${item.name}</h4>
-                    <p class="font-display font-bold text-sm mb-2 text-red-500">${formatPrice(item.price)}</p>
-                    
-                    <button onclick="addToCart(${item.id}); toggleFavorite(${item.id}); toggleFavSidebar(false);" class="text-xs px-3 py-1.5 rounded-full bg-black text-white hover:bg-gray-800 transition-colors">
-                        Thêm vào giỏ
-                    </button>
-                </div>
-                <!-- Nút xóa nhanh -->
-                <button onclick="toggleFavorite(${item.id})" class="absolute top-2 right-2 text-gray-400 hover:text-red-500">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-            </div>
-        `).join('');
-    }
-
-    function toggleFavSidebar(show) {
-        const overlay = document.getElementById('fav-overlay');
-        const sidebar = document.getElementById('fav-sidebar');
-        
-        if (show) {
-            renderFavoritesList();
-            overlay.classList.remove('hidden');
-            setTimeout(() => {
-                overlay.classList.remove('opacity-0');
-                sidebar.classList.remove('translate-x-full');
-            }, 10);
-        } else {
-            overlay.classList.add('opacity-0');
-            sidebar.classList.add('translate-x-full');
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-            }, 300);
-        }
-    }
-
-    function filterProducts(categoryName) {
-      let filteredList = [];
-
-      if (categoryName === 'all') {
-        filteredList = products;
-      } else {
-        // Lọc không phân biệt hoa thường
-        filteredList = products.filter(p => 
-          p.category && p.category.toLowerCase().includes(categoryName.toLowerCase())
-        );
-      }
-
-      // Render lại danh sách
-      renderProducts(filteredList);
-
-      // Tự động cuộn xuống phần sản phẩm
-      document.getElementById('products').scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-      
-      // Update màu nút bấm
-      updateActiveFilterButton(categoryName);
-    }
-
-    function updateActiveFilterButton(activeName) {
-        const buttons = document.querySelectorAll('#products button');
-        buttons.forEach(btn => {
-            const btnText = btn.textContent.toLowerCase();
-            const isActive = (activeName === 'all' && btnText.includes('tất cả')) || 
-                             (activeName !== 'all' && btnText.includes(activeName.toLowerCase())) ||
-                             (activeName === 'Váy' && btnText.includes('nữ'));
-
-            if (isActive) {
-                btn.style.backgroundColor = '#2d2926';
-                btn.style.color = '#faf8f5';
-                btn.style.borderColor = 'transparent';
-            } else {
-                btn.style.backgroundColor = 'transparent';
-                btn.style.color = '#5c5652';
-                btn.style.borderColor = 'transparent';
-            }
+    function bindProductFilters() {
+      document.querySelectorAll('.filter-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+          applyProductFilter(button.dataset.filter);
         });
+      });
+
+      document.querySelectorAll('[data-category-link]').forEach((card) => {
+        card.addEventListener('click', () => {
+          const selectedFilter = card.dataset.categoryLink;
+          applyProductFilter(selectedFilter);
+        });
+      });
     }
 
     // Add to cart
@@ -855,23 +703,41 @@
     let selectedSize = 'S';
     let carouselIndex = 0;
 
+    function getModalMediaItems() {
+      if (!currentModalProduct) return [];
+      const imageItems = (currentModalProduct.images || [currentModalProduct.image]).map((src) => ({ type: 'image', src }));
+      if (currentModalProduct.video) {
+        imageItems.push({ type: 'video', src: currentModalProduct.video });
+      }
+      return imageItems;
+    }
+
     // Carousel functions
     function updateCarousel(index) {
-      if (!currentModalProduct || !currentModalProduct.images) return;
-      
-      const images = currentModalProduct.images;
-      carouselIndex = (index + images.length) % images.length;
-      
-      document.getElementById('modal-image').src = images[carouselIndex];
-      
-      // Update dots
+      const mediaItems = getModalMediaItems();
+      if (!mediaItems.length) return;
+
+      carouselIndex = (index + mediaItems.length) % mediaItems.length;
+
+      const currentMedia = mediaItems[carouselIndex];
+      const imageEl = document.getElementById('modal-image');
+      const videoEl = document.getElementById('modal-video');
+
+      if (currentMedia.type === 'video') {
+        imageEl.classList.add('hidden');
+        videoEl.classList.remove('hidden');
+        videoEl.src = currentMedia.src;
+        videoEl.load();
+      } else {
+        videoEl.pause();
+        videoEl.classList.add('hidden');
+        imageEl.classList.remove('hidden');
+        imageEl.src = currentMedia.src;
+      }
+
       const dots = document.querySelectorAll('.carousel-dot');
       dots.forEach((dot, i) => {
-        if (i === carouselIndex) {
-          dot.style.backgroundColor = '#2d2926';
-        } else {
-          dot.style.backgroundColor = 'rgba(45, 41, 38, 0.3)';
-        }
+        dot.style.backgroundColor = i === carouselIndex ? '#2d2926' : 'rgba(45, 41, 38, 0.3)';
       });
     }
 
@@ -896,17 +762,17 @@
       carouselIndex = 0;
 
       // Update modal content
-      document.getElementById('modal-image').src = product.images ? product.images[0] : product.image;
       document.getElementById('modal-name').textContent = product.name;
       document.getElementById('modal-price').textContent = formatPrice(product.price);
-      
-      // Setup carousel dots
-      if (product.images && product.images.length > 0) {
-        const dotsContainer = document.getElementById('carousel-dots');
-        dotsContainer.innerHTML = product.images.map((_, i) => 
-          `<button class="carousel-dot w-2 h-2 rounded-full transition-colors" style="background-color: ${i === 0 ? '#2d2926' : 'rgba(45, 41, 38, 0.3)'};" onclick="updateCarousel(${i})"></button>`
-        ).join('');
-      }
+
+      // Setup carousel dots (images + video)
+      const dotsContainer = document.getElementById('carousel-dots');
+      const mediaItems = getModalMediaItems();
+      dotsContainer.innerHTML = mediaItems.map((_, i) =>
+        `<button class="carousel-dot w-2 h-2 rounded-full transition-colors" style="background-color: ${i === 0 ? '#2d2926' : 'rgba(45, 41, 38, 0.3)'};" onclick="updateCarousel(${i})"></button>`
+      ).join('');
+
+      updateCarousel(0);
       
       const originalPriceEl = document.getElementById('modal-original-price');
       if (product.originalPrice) {
@@ -954,6 +820,8 @@
 
     // Close product modal
     function closeProductModal() {
+      const modalVideo = document.getElementById('modal-video');
+      modalVideo.pause();
       const overlay = document.getElementById('product-modal-overlay');
       const modal = document.getElementById('product-modal');
       
@@ -1210,18 +1078,11 @@
     function init() {
       // Render initial products
       renderProducts();
+      bindProductFilters();
+      updateFilterButtons();
 
       // Update cart display from localStorage
       updateCart();
-
-      // --- CẬP NHẬT INIT ---
-      updateFavCount(); // Hiện số lượng yêu thích
-      
-      // Events cho sidebar yêu thích
-      document.getElementById('fav-btn').addEventListener('click', () => toggleFavSidebar(true));
-      document.getElementById('close-fav').addEventListener('click', () => toggleFavSidebar(false));
-      document.getElementById('fav-overlay').addEventListener('click', () => toggleFavSidebar(false));
-      // ---------------------
 
       // Cart button
       document.getElementById('cart-btn').addEventListener('click', () => toggleCart(true));
@@ -1518,5 +1379,6 @@ Liên hệ:
 
     init();
   </script>
- </body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c4057a9e345a029',t:'MTc2OTQzMzk5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
 </html>
