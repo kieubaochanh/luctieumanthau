@@ -28,9 +28,9 @@
       </div><!-- Actions -->
       <div class="flex items-center gap-3 sm:gap-4"><button id="search-btn" class="p-2 rounded-full transition-colors hover:bg-white/50" style="color: #fffaf7;">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg></button> <button class="p-2 rounded-full transition-colors hover:bg-white/50" style="color: #e7e4e2;">
+        </svg></button> <button id="favorites-btn" onclick="toggleFavorites(true); return false;" class="relative p-2 rounded-full transition-colors hover:bg-white/50" style="color: #e7e4e2;">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg></button> <button id="cart-btn" class="relative p-2 rounded-full transition-colors hover:bg-white/50" style="color: #f7f7f7;">
+        </svg><span id="favorites-count" class="cart-badge absolute -top-1 -right-1 w-5 h-5 text-xs font-bold rounded-full flex items-center justify-center" style="background-color: #ef4444; color: #ffffff;">0</span></button> <button id="cart-btn" class="relative p-2 rounded-full transition-colors hover:bg-white/50" style="color: #f7f7f7;">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
         </svg><span id="cart-count" class="cart-badge absolute -top-1 -right-1 w-5 h-5 text-xs font-bold rounded-full flex items-center justify-center" style="background-color: #c9a87c; color: #2d2926;">0</span> </button>
       </div>
@@ -48,7 +48,7 @@
        <p id="hero-subtitle" class="text-lg sm:text-xl leading-relaxed mb-8 max-w-lg" style="color: #5c5652;">Khám phá bộ sưu tập thời trang cao cấp, nơi sự tinh tế gặp gỡ phong cách đương đại.</p>
        <div class="flex flex-wrap gap-4"><a href="#products" class="btn-primary inline-flex items-center gap-2 px-8 py-4 rounded-full font-medium text-sm tracking-wide transition-all" style="background-color: #2d2926; color: #faf8f5;"> Khám phá ngay 
          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-         </svg></a> <button class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-medium text-sm tracking-wide border-2 transition-all hover:bg-white/50" style="border-color: #2d2926; color: #2d2926;"> Xem lookbook </button>
+         </svg></a> <button class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-medium text-sm tracking-wide border-2 transition-all hover:bg-white/50" style="border-color: #ef4444; color: #ef4444;"> Xem lookbook </button>
        </div>
       </div>
         </div>
@@ -220,7 +220,26 @@
       <p class="text-lg" style="color: #5c5652;">Không tìm thấy sản phẩm nào</p>
      </div>
     </div>
-   </div><!-- Footer --><!-- Cart Sidebar -->
+   </div><!-- Footer --><!-- Favorites Sidebar -->
+   <div id="favorites-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
+   <div id="favorites-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md z-50 transform translate-x-full transition-transform duration-300" style="background-color: #faf8f5;">
+    <div class="h-full flex flex-col">
+     <div class="flex items-center justify-between p-6 border-b" style="border-color: #e8e4df;">
+      <h3 class="font-display text-xl font-bold" style="color: #2d2926;">Sản phẩm yêu thích</h3><button id="close-favorites" class="p-2 rounded-full transition-colors hover:bg-gray-100" style="color: #5c5652;">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+     <div class="flex-1 overflow-auto p-6">
+      <div id="empty-favorites" class="h-full flex flex-col items-center justify-center text-center">
+       <div class="w-20 h-20 rounded-full flex items-center justify-center mb-4" style="background-color: #fee2e2;"><span class="text-3xl">❤️</span>
+       </div>
+       <p class="font-medium mb-2" style="color: #2d2926;">Chưa có sản phẩm yêu thích</p>
+       <p class="text-sm" style="color: #5c5652;">Bấm vào trái tim để lưu sản phẩm bạn thích</p>
+      </div>
+      <div id="favorites-list" class="space-y-4 hidden"></div>
+     </div>
+    </div>
+   </div><!-- Cart Sidebar -->
    <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md z-50 transform translate-x-full transition-transform duration-300" style="background-color: #faf8f5;">
     <div class="h-full flex flex-col">
@@ -417,7 +436,7 @@
         </div>
         <div class="flex gap-3"><button id="modal-add-cart" class="btn-primary flex-1 py-4 rounded-full font-medium text-sm tracking-wide transition-all flex items-center justify-center gap-2" style="background-color: #2d2926; color: #faf8f5;">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-          </svg> Thêm vào giỏ </button> <button class="w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all" style="border-color: #2d2926; color: #2d2926;">
+          </svg> Thêm vào giỏ </button> <button id="modal-favorite-btn" onclick="if(currentModalProduct){toggleFavorite(currentModalProduct.id);} event.stopPropagation();" class="w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all" style="border-color: #2d2926; color: #2d2926;">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
           </svg></button>
         </div>
@@ -470,14 +489,15 @@
 
     let config = { ...defaultConfig };
     let cart = JSON.parse(localStorage.getItem('lucj_cart')) || [];
+    let favorites = JSON.parse(localStorage.getItem('lucj_favorites')) || [];
 
     // Product data
     <!-- mãng aray trong java -->
     const products = [
-      { id: 1, category: 'ao-dai-tet', name: 'Áo Dài Tết cho các chị em', price: 1890000, originalPrice: 2690000, badge: 'Sale', image: 'images/aodai1.jpg', images: ['images/aodai1.jpg', 'images/aodai.jpg'],  },
-      { id: 2, category: 'vay', name: 'Váy Midi Elegant', price: 1290000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'],  },
+      { id: 1, category: 'ao-dai-tet', name: 'Áo Dài Tết cho các chị em', price: 1890000, originalPrice: 2690000, badge: 'Sale', image: 'images/aodai1.jpg', images: ['images/aodai1.jpg', 'images/aodai.jpg'], video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
+      { id: 2, category: 'vay', name: 'Váy Midi Elegant', price: 1290000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'], video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4' },
       { id: 3, category: 'ao-dai-tet', name: 'Áo dài thanh xuân vườn trường', price: 890000, originalPrice: null, badge: null,  image: 'images/20.jpg', images: ['images/20.jpg', 'images/19.jpg', 'images/18.jpg'] },
-      { id: 4, category: 'do-nam', name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'], },
+      { id: 4, category: 'do-nam', name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'], video: 'https://www.w3schools.com/html/movie.mp4' },
       { id: 5, category: 'bao-tuoi-tre', name: 'Set Xanh Nhí Nhảnh', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/21.jpg', images: ['images/21.jpg', 'images/22.jpg', 'images/23.jpg'] },
       { id: 6, category: 'do-nam', name: 'Set Đồ Đi Đồi Đà Lạt', price: 1190000, originalPrice: null, badge: null, image: 'images/thanh.jpg', images: ['images/thanh.jpg', 'images/thanhnui.jpg', 'images/tuannui.jpg'] },
       { id: 9, category: 'ao-dai-tet', name: 'Áo dài hồng phấn họa tiết nổi', price: 1590000, originalPrice: 1990000, badge: 'Sale', image: 'images/aodai2.jpg', images: ['images/aodai2.jpg', 'images/aodai3.jpg'] },
@@ -495,8 +515,27 @@
       { id: 21, name: 'set váy dài áo trễ vai', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/vaydai.jpg', images: ['images/vaydai.jpg', 'images/vaydai0.jpg', 'images/vaydai1.jpg'], category: 'Váy' },
       { id:22, name: 'Áo Dài Cổ Điển', price:588000, originalPrice: null, badge: 'Hot', image: 'images/nhi.jpg', images: ['images/nhi.jpg', 'images/nhi1.jpg','images/nhi0.jpg'], category: 'Áo dài' },
       { id: 23, name: 'Con chó bị bỏ đói', price: 100000, originalPrice: null, badge: null, image: 'images/cho.jpg', images: ['images/cho.jpg'], category: 'tre' },
-      {id: 24, name: 'ao phit Valentine đa dạng phương tiện', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/helo.jpeg', images: ['images/helo.jpeg','images/helo0.jpeg','images/helo1.jpeg','images/helo2.jpeg','images/helo3.jpeg' ], video:'videos/helo.mp4', category: 'Nam' }
+      {id: 24, name: 'ao phit Valentine đa dạng phương tiện', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/helo.jpeg', images: ['images/helo.jpeg','images/helo0.jpeg','images/helo1.jpeg','images/helo2.jpeg','images/helo3.jpeg' ], video:'videos/helo.mp4', category: 'Nam' },
+      {id:25, name:'Xe Dream Dành Cho Người Cỗi ÂM', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/dream.jpg', images: ['images/dream.jpg'], video:'videos/dream.mp4', category: 'Nam' }
     ];
+
+    const productDescriptions = {
+      1: 'Áo dài tết gam đỏ nổi bật, chất liệu mềm rủ, tôn dáng và phù hợp diện chụp ảnh xuân hoặc du xuân cùng gia đình.',
+      2: 'Váy midi thanh lịch với phom suông nhẹ, dễ phối sneaker hoặc cao gót, phù hợp đi làm và đi chơi cuối tuần.',
+      3: 'Mẫu áo dài thanh xuân cảm hứng học đường, họa tiết nhẹ nhàng, tạo cảm giác trẻ trung và nữ tính.',
+      4: 'Combo áo khoác phong cách Đà Lạt giữ ấm tốt, form nam tính, phối được nhiều lớp đồ cho thời tiết se lạnh.',
+      5: 'Set xanh nhí nhảnh cho bé với tông màu tươi sáng, vải thoáng mát, phù hợp đi dạo phố và chụp hình.',
+      6: 'Set đồ đi đồi thiết kế năng động, dễ vận động, chất vải bền và thoải mái khi di chuyển ngoài trời.',
+      9: 'Áo dài hồng phấn họa tiết nổi tạo điểm nhấn sang trọng, phù hợp dịp lễ tết, sự kiện gia đình hoặc chụp kỷ niệm.',
+      10: 'Áo cô em nhà bên phong cách vintage, nhẹ nhàng, dễ phối chân váy hoặc quần jean cho outfit hàng ngày.',
+      11: 'Áo dài xanh lục tối giản, nổi bật màu sắc Á Đông, phù hợp mặc lễ hội và các dịp trang trọng.',
+      12: 'Set đi biển phong cách trẻ trung lấy cảm hứng K-fashion, vải nhẹ, lên hình đẹp khi đi du lịch.',
+      13: 'Váy phi hành gia trẻ em cá tính, thiết kế vui nhộn, phù hợp tiệc hóa trang và chụp ảnh concept.',
+      14: 'Set đi biển trẻ em thoải mái, màu sắc tươi sáng, dễ giặt và nhanh khô cho các hoạt động ngoài trời.',
+      15: 'Set đồ nhập ngũ trẻ em năng động, đường may chắc chắn, phù hợp các buổi biểu diễn hoặc vui chơi tập thể.',
+      16: 'Set công chúa Disney cho bé với chi tiết bồng bềnh, tạo cảm giác nổi bật trong tiệc sinh nhật và sự kiện.',
+      17: 'Set streetstyle secondhand cảm hứng Chy Pu, phối màu cá tính, phù hợp các bạn thích phong cách nổi bật.'
+    };
 
     // Format price
     function formatPrice(price) {
@@ -537,6 +576,106 @@
       updateFilterButtons();
     }
 
+    function isFavorite(productId) {
+      return favorites.includes(productId);
+    }
+
+    function updateFavoriteButtonVisual(button, isActive) {
+      if (!button) return;
+      button.style.backgroundColor = 'rgba(250, 248, 245, 0.92)';
+      button.style.color = isActive ? '#ef4444' : '#2d2926';
+      button.style.borderColor = '#2d2926';
+    }
+
+    function updateModalFavoriteButton() {
+      const modalFavoriteBtn = document.getElementById('modal-favorite-btn');
+      if (!modalFavoriteBtn || !currentModalProduct) return;
+      updateFavoriteButtonVisual(modalFavoriteBtn, isFavorite(currentModalProduct.id));
+    }
+
+    function toggleFavorite(productId) {
+      const id = Number(productId);
+      if (!id) return;
+
+      if (isFavorite(id)) {
+        favorites = favorites.filter(item => item !== id);
+        showToast('Đã xóa khỏi yêu thích');
+      } else {
+        favorites.push(id);
+        showToast('Đã thêm vào yêu thích');
+      }
+
+      localStorage.setItem('lucj_favorites', JSON.stringify(favorites));
+      renderProducts();
+      updateModalFavoriteButton();
+      updateFavoritesUI();
+
+      const searchInput = document.getElementById('search-input');
+      if (searchInput && searchInput.value.trim()) {
+        performSearch();
+      }
+    }
+
+    function updateFavoritesUI() {
+      const favoritesCount = document.getElementById('favorites-count');
+      if (favoritesCount) favoritesCount.textContent = favorites.length;
+
+      const emptyFavorites = document.getElementById('empty-favorites');
+      const favoritesList = document.getElementById('favorites-list');
+      if (!emptyFavorites || !favoritesList) return;
+
+      const favoriteProducts = products.filter((product) => favorites.includes(product.id));
+      if (!favoriteProducts.length) {
+        emptyFavorites.classList.remove('hidden');
+        favoritesList.classList.add('hidden');
+        favoritesList.innerHTML = '';
+        return;
+      }
+
+      emptyFavorites.classList.add('hidden');
+      favoritesList.classList.remove('hidden');
+      favoritesList.innerHTML = favoriteProducts.map((item) => `
+        <div class="flex gap-4 p-3 rounded-xl" style="background-color: ${config.surface_color};">
+          <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0" style="background-color: #e8e4df;">
+            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+          </div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-medium text-sm mb-1 truncate" style="color: ${config.text_color};">${item.name}</h4>
+            <p class="font-display font-bold text-sm mb-2" style="color: ${config.text_color};">${formatPrice(item.price)}</p>
+            <div class="flex items-center gap-2">
+              <button onclick="openFavoriteProduct(${item.id})" class="px-3 py-1.5 text-xs rounded-full" style="background-color: ${config.primary_action_color}; color: ${config.background_color};">Xem</button>
+              <button onclick="toggleFavorite(${item.id})" class="px-3 py-1.5 text-xs rounded-full" style="background-color: #fee2e2; color: #dc2626;">Bỏ thích</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleFavorites(show) {
+      const overlay = document.getElementById('favorites-overlay');
+      const sidebar = document.getElementById('favorites-sidebar');
+      if (!overlay || !sidebar) return;
+
+      if (show) {
+        overlay.classList.remove('hidden');
+        setTimeout(() => {
+          overlay.classList.remove('opacity-0');
+          sidebar.classList.remove('translate-x-full');
+        }, 10);
+      } else {
+        overlay.classList.add('opacity-0');
+        sidebar.classList.add('translate-x-full');
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    function openFavoriteProduct(productId) {
+      toggleFavorites(false);
+      setTimeout(() => openProductModal(productId), 150);
+    }
+
     // Render products
     function renderProducts() {
       const grid = document.getElementById('product-grid');
@@ -551,6 +690,11 @@
 </div>
 
             ${product.badge ? `<span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style="background-color: ${config.secondary_action_color}; color: ${config.text_color};">${product.badge}</span>` : ''}
+            <button onclick="event.stopPropagation(); toggleFavorite(${product.id})" class="absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="background-color: rgba(250, 248, 245, 0.92); color: ${isFavorite(product.id) ? '#ef4444' : '#2d2926'}; border: 1px solid #2d2926;">
+              <svg class="w-5 h-5" fill="${isFavorite(product.id) ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </button>
             <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-3 right-3 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="background-color: ${config.primary_action_color}; color: ${config.background_color};">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -764,6 +908,7 @@
       // Update modal content
       document.getElementById('modal-name').textContent = product.name;
       document.getElementById('modal-price').textContent = formatPrice(product.price);
+      document.getElementById('modal-description').textContent = product.description || productDescriptions[product.id] || 'Sản phẩm chất lượng cao, thiết kế chỉn chu và phù hợp nhiều dịp khác nhau.';
 
       // Setup carousel dots (images + video)
       const dotsContainer = document.getElementById('carousel-dots');
@@ -790,6 +935,7 @@
       }
 
       document.getElementById('modal-quantity').textContent = modalQuantity;
+      updateModalFavoriteButton();
 
       // Reset size buttons
       document.querySelectorAll('.size-btn').forEach((btn, index) => {
@@ -840,6 +986,7 @@
     function updateModalQuantity(delta) {
       modalQuantity = Math.max(1, modalQuantity + delta);
       document.getElementById('modal-quantity').textContent = modalQuantity;
+      updateModalFavoriteButton();
     }
 
     // Add from modal to cart
@@ -893,6 +1040,7 @@
       // Re-render products with updated colors
       renderProducts();
       updateCart();
+      updateFavoritesUI();
     }
 
     // Map to capabilities
@@ -1056,6 +1204,11 @@
            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
     </div>
               ${product.badge ? `<span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style="background-color: ${config.secondary_action_color}; color: ${config.text_color};">${product.badge}</span>` : ''}
+              <button onclick="event.stopPropagation(); toggleFavorite(${product.id})" class="absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="background-color: rgba(250, 248, 245, 0.92); color: ${isFavorite(product.id) ? '#ef4444' : '#2d2926'}; border: 1px solid #2d2926;">
+                <svg class="w-5 h-5" fill="${isFavorite(product.id) ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
               <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-3 right-3 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110" style="background-color: ${config.primary_action_color}; color: ${config.background_color};">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -1081,13 +1234,19 @@
       bindProductFilters();
       updateFilterButtons();
 
-      // Update cart display from localStorage
+      // Update cart and favorites display from localStorage
       updateCart();
+      updateFavoritesUI();
 
       // Cart button
       document.getElementById('cart-btn').addEventListener('click', () => toggleCart(true));
       document.getElementById('close-cart').addEventListener('click', () => toggleCart(false));
       document.getElementById('cart-overlay').addEventListener('click', () => toggleCart(false));
+
+      // Favorites button
+      document.getElementById('favorites-btn').addEventListener('click', () => toggleFavorites(true));
+      document.getElementById('close-favorites').addEventListener('click', () => toggleFavorites(false));
+      document.getElementById('favorites-overlay').addEventListener('click', () => toggleFavorites(false));
 
       // Payment method change listener
       document.querySelectorAll('input[name="payment"]').forEach(radio => {
@@ -1382,4 +1541,3 @@ Liên hệ:
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c4057a9e345a029',t:'MTc2OTQzMzk5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 
 </html>
-
