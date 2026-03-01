@@ -494,10 +494,10 @@
     // Product data
     <!-- mãng aray trong java -->
     const products = [
-      { id: 1, category: 'ao-dai-tet', name: 'Áo Dài Tết cho các chị em', price: 1890000, originalPrice: 2690000, badge: 'Sale', image: 'images/aodai1.jpg', images: ['images/aodai1.jpg', 'images/aodai.jpg'], video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
-      { id: 2, category: 'vay', name: 'Váy Midi Elegant', price: 1290000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'], video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4' },
+      { id: 1, category: 'ao-dai-tet', name: 'Áo Dài Tết cho các chị em', price: 1890000, originalPrice: 2690000, badge: 'Sale', image: 'images/aodai1.jpg', images: ['images/aodai1.jpg', 'images/aodai.jpg']},
+      { id: 2, category: 'vay', name: 'Váy Midi Elegant', price: 1290000, originalPrice: null, badge: 'New',  image: 'images/vay.jpg', images: ['images/vay.jpg', 'images/vay1.jpg'], },
       { id: 3, category: 'ao-dai-tet', name: 'Áo dài thanh xuân vườn trường', price: 890000, originalPrice: null, badge: null,  image: 'images/20.jpg', images: ['images/20.jpg', 'images/19.jpg', 'images/18.jpg'] },
-      { id: 4, category: 'do-nam', name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'], video: 'https://www.w3schools.com/html/movie.mp4' },
+      { id: 4, category: 'do-nam', name: 'combo áo khoác Đà Lạt cực đẹp trai', price: 990000, originalPrice: null, badge: 'New', image: 'images/donam.jpg', images: ['images/donam.jpg', 'images/aokhoac1.jpg', 'images/aokhoac.jpg'] },
       { id: 5, category: 'bao-tuoi-tre', name: 'Set Xanh Nhí Nhảnh', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/21.jpg', images: ['images/21.jpg', 'images/22.jpg', 'images/23.jpg'] },
       { id: 6, category: 'do-nam', name: 'Set Đồ Đi Đồi Đà Lạt', price: 1190000, originalPrice: null, badge: null, image: 'images/thanh.jpg', images: ['images/thanh.jpg', 'images/thanhnui.jpg', 'images/tuannui.jpg'] },
       { id: 9, category: 'ao-dai-tet', name: 'Áo dài hồng phấn họa tiết nổi', price: 1590000, originalPrice: 1990000, badge: 'Sale', image: 'images/aodai2.jpg', images: ['images/aodai2.jpg', 'images/aodai3.jpg'] },
@@ -514,9 +514,18 @@
       { id: 20, name: 'set đồ đi biển cho nàng thơ', price:188000, originalPrice: null, badge: null, image: 'images/hanh0.jpg', images: ['images/hanh0.jpg', 'images/bien.jpg',], category: 'Váy' },
       { id: 21, name: 'set váy dài áo trễ vai', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/vaydai.jpg', images: ['images/vaydai.jpg', 'images/vaydai0.jpg', 'images/vaydai1.jpg'], category: 'Váy' },
       { id:22, name: 'Áo Dài Cổ Điển', price:588000, originalPrice: null, badge: 'Hot', image: 'images/nhi.jpg', images: ['images/nhi.jpg', 'images/nhi1.jpg','images/nhi0.jpg'], category: 'Áo dài' },
-      { id: 23, name: 'Con chó bị bỏ đói', price: 100000, originalPrice: null, badge: null, image: 'images/cho.jpg', images: ['images/cho.jpg'], category: 'tre' },
+      { id: 23, name: 'Con chó bị bỏ đói', price: 100000, originalPrice: null, badge: null, image: 'images/cho.jpg', images: ['images/cho.jpg','images/cho1.jpg'], category: 'tre' },
       {id: 24, name: 'ao phit Valentine đa dạng phương tiện', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/helo.jpeg', images: ['images/helo.jpeg','images/helo0.jpeg','images/helo1.jpeg','images/helo2.jpeg','images/helo3.jpeg' ], video:'videos/helo.mp4', category: 'Nam' },
-      {id:25, name:'Xe Dream Dành Cho Người Cỗi ÂM', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/dream.jpg', images: ['images/dream.jpg'], video:'videos/dream.mp4', category: 'Nam' }
+      {id:25, name:'Xe Dream Dành Cho Người Cỗi ÂM', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/dream.jpg', images: ['images/dream.jpg'], video:'videos/dream.mp4', category: 'Nam' },
+      {id: 26, name: 'Set Đồ Đen Xì Cho Bạn Thân', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/den.jpg', images: ['images/den.jpg','images/den0.jpg','images/den1.jpg','images/den2.jpg'], category: 'vay'},
+      {id: 27, name: 'Khung Ảnh Tỉ Lệ 1:1 Siu To', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/khung.jpg', images: ['images/khung.jpg','images/khung1.jpg','images/khung2.jpg'], category:'do-nam'},
+      {id: 28, name: 'Đồ Thi Đấu Bóng Đá Nam (Áo + Quần)', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/abdx2.jpg', images: ['images/abdx2.jpg','images/abdx1.jpg','images/abdx.jpg'], category:'do-nam'},
+      {id: 29, name: 'Đồ Thi Đấu Bóng Đá FUTSAL Nam (Áo + Quần)', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/abdv.jpg', images: ['images/abdv.jpg','images/abdv1.jpg','images/abdv2.jpg'], category:'do-nam'},
+      {id: 30, name: 'Đồ Thi Đấu Bóng Đá Trắng Xanh Nam (Áo + Quần)', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/abdt.jpg', images: ['images/abdt.jpg','images/abdt1.jpg','images/abdt2.jpg'], category:'do-nam'},
+      {id: 31, name: 'Đồ Thi Đấu Điền Kinh 3 Môn Phối Hợp Khu Vực Miền Tây', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/ga.jpg', images: ['images/ga.jpg','images/ga1.jpg','images/ga2.jpg'], video:'videos/ga.mp4', category:'do-nam'},
+      {id: 32, name: 'Đồ Thỉnh Kinh Nữ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/kinh.jpg', images: ['images/kinh.jpg','images/kinh1.jpg','images/kinh2.jpg'], category:'vay'},
+      {id: 33, name: 'Váy Trắng Nữ', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/vaytrang.jpg', images: ['images/vaytrang.jpg','images/vaytrang1.jpg','images/vaytrang2.jpg'], category:'vay'},
+      {id: 34, name: 'Váy Trẻ Em', price: 1490000, originalPrice: 1890000, badge: 'Sale', image: 'images/vaytreem.jpg', images: ['images/vaytreem.jpg','images/vaytreem1.jpg','images/vaytreem2.jpg'], category:'vay'}
     ];
 
     const productDescriptions = {
